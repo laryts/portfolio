@@ -393,3 +393,5 @@ function getTimelineData(data) {
     </div>
   )
 }
+
+export default { ReactPerformanceContent }

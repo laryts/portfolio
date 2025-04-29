@@ -776,3 +776,5 @@ describe('ds-button', () => {
     </div>
   )
 }
+
+export default { DesignSystemsContent }

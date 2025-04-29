@@ -848,3 +848,5 @@ export const useProducts = () => {
     </div>
   )
 }
+
+export default { MobileDevTipsContent }

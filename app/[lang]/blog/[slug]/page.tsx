@@ -3,14 +3,26 @@ import type { Locale } from "@/types/i18n"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { Calendar, ArrowLeft } from "lucide-react"
-import { ReactPerformanceContent } from "@/lib/blog-content/en/react-performance"
-import { DesignSystemsContent } from "@/lib/blog-content/en/design-systems"
-import { MobileDevTipsContent } from "@/lib/blog-content/en/mobile-dev-tips"
-// Import the SocialShareButtons component
+import dynamic from "next/dynamic"
 import { SocialShareButtons } from "@/components/social-share-buttons"
 
-// Import Portuguese content
-import { ReactPerformanceContent as ReactPerformanceContentPT } from "@/lib/blog-content/pt/react-performance"
+// Use dynamic imports to prevent client-side exceptions
+const ReactPerformanceContent = dynamic(
+  () => import("@/lib/blog-content/en/react-performance").then((mod) => ({ default: mod.ReactPerformanceContent })),
+  { ssr: true },
+)
+const DesignSystemsContent = dynamic(
+  () => import("@/lib/blog-content/en/design-systems").then((mod) => ({ default: mod.DesignSystemsContent })),
+  { ssr: true },
+)
+const MobileDevTipsContent = dynamic(
+  () => import("@/lib/blog-content/en/mobile-dev-tips").then((mod) => ({ default: mod.MobileDevTipsContent })),
+  { ssr: true },
+)
+const ReactPerformanceContentPT = dynamic(
+  () => import("@/lib/blog-content/pt/react-performance").then((mod) => ({ default: mod.ReactPerformanceContent })),
+  { ssr: true },
+)
 
 export default async function BlogPost({
   params: { lang, slug },
