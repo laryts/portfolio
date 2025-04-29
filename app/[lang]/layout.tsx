@@ -7,6 +7,7 @@ import { Header } from "@/components/header"
 import { locales } from "@/middleware"
 import type { Locale } from "@/types/i18n"
 import { getDictionary } from "@/dictionaries"
+import { Footer } from "@/components/footer"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -36,6 +37,7 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange={false}>
           <Header lang={resolvedParams.lang} dictionary={dictionary} />
           {children}
+          <Footer dictionary={dictionary} />
         </ThemeProvider>
       </body>
     </html>

@@ -11,7 +11,7 @@ export const dictionary = {
   // Hero section
   hero: {
     title: "Larissa Soares",
-    subtitle: "Senior Front-End Engineer",
+    subtitle: "Senior Software Engineer",
     cta: "View my work",
     lightMode: "Light Mode",
     darkMode: "Dark Mode",
@@ -20,7 +20,7 @@ export const dictionary = {
   about: {
     title: "About Me",
     description:
-      "Hi, I'm Larissa, a Senior Front-End Engineer with 8 years of professional experience specializing in React and scalable web solutions. Known for delivering impactful products and leading teams to success, I excel in creating innovative applications while fostering collaboration across diverse teams.",
+      "Hi, I'm Larissa, a Senior Software Engineer with 8 years of professional experience specializing in React and scalable web solutions. Known for delivering impactful products and leading teams to success, I excel in creating innovative applications while fostering collaboration across diverse teams.",
     contactButton: "Contact me",
     projectsButton: "View projects",
     downloadResume: "Download Resume",
@@ -148,5 +148,41 @@ export const dictionary = {
     loading: "Loading contributions...",
     error: "Failed to load GitHub contributions",
     total: "Total contributions",
+  },
+  // Add this new section
+  personal: {
+    title: "Personal Side",
+    subtitle: "Beyond the code: a bit about who I am when I'm not programming",
+    catLover: {
+      title: "Cat Lover",
+      description:
+        "Proud parent of two adorable cats who often supervise my coding sessions from the comfort of my keyboard. Joey (tuxedo) and Jack (tabby).",
+    },
+    hobbies: {
+      title: "Hobbies & Interests",
+      items: [
+        {
+          name: "Photography",
+          description: "Amateur photographer who loves capturing urban landscapes and nature.",
+        },
+        {
+          name: "Reading",
+          description: "Avid reader of sci-fi novels and technical books. Always looking for recommendations!",
+        },
+        {
+          name: "Cooking",
+          description: "Experimenting with new recipes and cuisines is my way to relax after a long day of coding.",
+        },
+        {
+          name: "Hiking",
+          description: "Finding peace and inspiration in nature trails and mountain views.",
+        },
+      ],
+    },
+    talkTopics: {
+      title: "Let's Talk About",
+      description: "Beyond tech, I love discussing:",
+      topics: ["Disney", "Travel adventures", "Wine", "Board games", "Cats", "Friends"],
+    },
   },
 }

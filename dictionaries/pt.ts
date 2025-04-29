@@ -11,7 +11,7 @@ export const dictionary = {
   // Hero section
   hero: {
     title: "Larissa Soares",
-    subtitle: "Engenheira Front-End Sênior",
+    subtitle: "Engenheira de Software Sênior",
     cta: "Conheça meu trabalho",
     lightMode: "Modo Claro",
     darkMode: "Modo Escuro",
@@ -20,7 +20,7 @@ export const dictionary = {
   about: {
     title: "Sobre Mim",
     description:
-      "Olá, sou Larissa, uma Engenheira Front-End Sênior com 8 anos de experiência profissional especializada em React e soluções web escaláveis. Conhecida por entregar produtos impactantes e liderar equipes ao sucesso, me destaco na criação de aplicações inovadoras enquanto promovo a colaboração entre equipes diversas.",
+      "Olá, sou Larissa, uma Engenheira de Software Sênior com 8 anos de experiência profissional especializada em React e soluções web escaláveis. Conhecida por entregar produtos impactantes e liderar equipes ao sucesso, me destaco na criação de aplicações inovadoras enquanto promovo a colaboração entre equipes diversas.",
     contactButton: "Entre em contato",
     projectsButton: "Ver projetos",
     downloadResume: "Baixar Currículo",
@@ -149,5 +149,43 @@ export const dictionary = {
     degree: "Análise e Desenvolvimento de Sistemas",
     institution: "FATEC P. Prudente",
     period: "JAN 2013 - JUN 2017",
+  },
+  // Add this new section
+  personal: {
+    title: "Lado Pessoal",
+    subtitle: "Além do código: um pouco sobre quem eu sou quando não estou programando",
+    catLover: {
+      title: "Amante de Gatos",
+      description:
+        "Orgulhosa tutora de dois adoráveis gatos que frequentemente supervisionam minhas sessões de programação do conforto do meu teclado. Joey (frajola) e Jack (rajado).",
+    },
+    hobbies: {
+      title: "Hobbies & Interesses",
+      items: [
+        {
+          name: "Fotografia",
+          description: "Fotógrafa amadora que adora capturar paisagens urbanas e natureza.",
+        },
+        {
+          name: "Leitura",
+          description:
+            "Leitora ávida de romances de ficção científica e livros técnicos. Sempre procurando recomendações!",
+        },
+        {
+          name: "Culinária",
+          description:
+            "Experimentar novas receitas e culinárias é minha forma de relaxar após um longo dia de programação.",
+        },
+        {
+          name: "Trilhas",
+          description: "Encontrando paz e inspiração em trilhas na natureza e vistas de montanhas.",
+        },
+      ],
+    },
+    talkTopics: {
+      title: "Vamos Conversar Sobre",
+      description: "Além de tecnologia, adoro discutir sobre:",
+      topics: ["Disney", "Viagens", "Vinhos", "Jogos de tabuleiro", "Gatos", "Amigos"],
+    },
   },
 }

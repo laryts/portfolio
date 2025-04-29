@@ -7,10 +7,9 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Larissa Soares | Senior Front-End Engineer",
+  title: "Larissa Soares | Senior Software Engineer",
   description:
-    "Portfolio of Larissa Soares, a front-end engineer with 7 years of experience in React, Next.js, and React Native.",
-    generator: 'v0.dev'
+    "Portfolio of Larissa Soares, a software engineer with 8 years of experience in React, Next.js, and React Native.",
 }
 
 export default function RootLayout({
