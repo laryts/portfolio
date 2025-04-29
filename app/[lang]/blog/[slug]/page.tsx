@@ -124,12 +124,9 @@ const BlogContent = ({ lang, slug }: { lang: Locale; slug: string }) => {
   )
 }
 
-export default async function BlogPost({
-  params: { lang, slug },
-}: {
-  params: { lang: Locale; slug: string }
-}) {
-  const dictionary = getDictionary(lang)
+export default async function BlogPost({ params }: { params: Promise<{ lang: Locale; slug: string }> }) {
+  const { lang, slug } = await params
+  const dictionary = await getDictionary(lang)
 
   // Get the blog post data based on the slug
   const postKey = Object.keys(dictionary.blog.posts).find((key) => key === slug)

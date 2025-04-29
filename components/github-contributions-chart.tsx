@@ -32,6 +32,7 @@ export function GitHubContributionsChart({
     const fetchContributions = async () => {
       try {
         const data = await getGitHubContributions(username)
+        console.log("data", data)
         setContributions(data)
       } catch (error) {
         console.error("Error in component:", error)

@@ -7,6 +7,6 @@ const dictionaries = {
   pt: ptDictionary,
 }
 
-export const getDictionary = (locale: Locale) => {
-  return dictionaries[locale]
+export const getDictionary = async (locale: Locale) => {
+  return dictionaries[locale] as typeof dictionaries[keyof typeof dictionaries]
 }

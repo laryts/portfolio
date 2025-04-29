@@ -4,8 +4,9 @@ import type { Locale } from "@/types/i18n"
 import { BlogPostCard } from "@/components/blog-post-card"
 import { ArrowLeft } from "lucide-react"
 
-export default async function BlogIndex({ params: { lang } }: { params: { lang: Locale } }) {
-  const dictionary = getDictionary(lang)
+export default async function BlogIndex({ params }: { params: Promise<{ lang: Locale }> }) {
+  const { lang } = await params
+  const dictionary = await getDictionary(lang)
 
   // Get all blog posts
   const blogPosts = Object.entries(dictionary.blog.posts).map(([slug, post]) => ({

@@ -9,9 +9,21 @@ import { BlogPostCard } from "@/components/blog-post-card"
 import { GitHubContributionsChart } from "@/components/github-contributions-chart" // Add this import
 import { getDictionary } from "@/dictionaries"
 import type { Locale } from "@/types/i18n"
+import type { Metadata } from "next"
 
-export default async function Home({ params: { lang } }: { params: { lang: Locale } }) {
-  const dictionary = getDictionary(lang)
+export const metadata: Metadata = {
+  title: "Larissa Soares | Senior Front-End Engineer",
+  description:
+    "Portfolio of Larissa Soares, a front-end engineer with 7 years of experience in React, Next.js, and React Native.",
+}
+
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ lang: Locale }>
+}) {
+  const { lang } = await params
+  const dictionary = await getDictionary(lang)
 
   return (
     <div className="min-h-screen bg-white dark:bg-dark-purple-950 text-gray-800 dark:text-gray-200 transition-colors duration-300">
@@ -273,7 +285,7 @@ export default async function Home({ params: { lang } }: { params: { lang: Local
       </section>
 
       {/* GitHub Contributions Section - Add this section */}
-      <section className="py-20 px-4 md:px-8 bg-gray-100 dark:bg-dark-purple-900 transition-colors duration-300">
+      {/* <section className="py-20 px-4 md:px-8 bg-gray-100 dark:bg-dark-purple-900 transition-colors duration-300">
         <div className="max-w-6xl mx-auto">
           <AnimateOnScroll animation="fade" duration={0.8}>
             <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">{dictionary.github.title}</h2>
@@ -288,7 +300,7 @@ export default async function Home({ params: { lang } }: { params: { lang: Local
             totalText={dictionary.github.total}
           />
         </div>
-      </section>
+      </section> */}
 
       {/* Experience Section */}
       <section
@@ -461,7 +473,7 @@ export default async function Home({ params: { lang } }: { params: { lang: Local
               <ContactLink
                 platform="email"
                 href="mailto:laritavaressoares@gmail.com"
-                label="laritavaressoares@gmail.com"
+                label="Email"
               />
               <ContactLink platform="github" href="https://github.com/laryts" label="GitHub" />
               <ContactLink platform="linkedin" href="https://linkedin.com/in/larissasoares" label="LinkedIn" />

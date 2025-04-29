@@ -25,15 +25,16 @@ export default async function RootLayout({
   params,
 }: {
   children: React.ReactNode
-  params: { lang: Locale }
+  params: Promise<{ lang: Locale }>
 }) {
-  const dictionary = getDictionary(params.lang)
+  const resolvedParams = await params
+  const dictionary = await getDictionary(resolvedParams.lang)
 
   return (
-    <html lang={params.lang} suppressHydrationWarning>
+    <html lang={resolvedParams.lang} suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange={false}>
-          <Header lang={params.lang} dictionary={dictionary} />
+          <Header lang={resolvedParams.lang} dictionary={dictionary} />
           {children}
         </ThemeProvider>
       </body>
