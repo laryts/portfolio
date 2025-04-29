@@ -26,14 +26,15 @@ export default async function Home({
   const dictionary = await getDictionary(lang)
 
   return (
-    <div className="min-h-screen bg-white dark:bg-dark-purple-950 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <div className="relative min-h-screen bg-white dark:bg-dark-purple-950 text-gray-800 dark:text-gray-200 transition-colors duration-300">
       {/* Hero Section */}
-      <section className="relative h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
-        <AnimateOnScroll animation="fade" duration={1.2}>
-          <div className="absolute top-20 left-1/2 -translate-x-1/2 z-10">
+      <AnimateOnScroll animation="fade" duration={1.2}>
+          <div className="absolute left-1/2 -translate-x-1/2 z-10">
             <LightBulb dictionary={dictionary} />
           </div>
         </AnimateOnScroll>
+      <section className="relative h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+        
 
         {/* Efeito de spotlight */}
         <div className="spotlight"></div>

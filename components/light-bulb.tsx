@@ -29,7 +29,7 @@ export function LightBulb({ dictionary }: LightBulbProps) {
   return (
     <div className="flex flex-col items-center">
       {/* Fio da lâmpada */}
-      <div className="w-1 h-20 bg-gray-400 dark:bg-gray-600"></div>
+      <div className="w-1 h-40 bg-gray-400 dark:bg-gray-600"></div>
 
       {/* Lâmpada com botão de toggle */}
       <div
@@ -96,9 +96,9 @@ export function LightBulb({ dictionary }: LightBulbProps) {
             <div className="absolute inset-0 bg-yellow-300 opacity-20 rounded-full blur-xl animate-pulse"></div>
           )}
         </div>
-        <div className="text-center mt-2 text-sm text-gray-600 dark:text-gray-400">
+        {/* <div className="text-center mt-2 text-sm text-gray-600 dark:text-gray-400">
           {currentTheme === "dark" ? dictionary.hero.lightMode : dictionary.hero.darkMode}
-        </div>
+        </div> */}
       </div>
     </div>
   )
