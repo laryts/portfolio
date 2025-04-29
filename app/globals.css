@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 273 91% 31%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 273 91% 31%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 273 91% 31%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 280 50% 8%;
+    --foreground: 210 40% 98%;
+
+    --card: 280 50% 10%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 280 50% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 273 91% 31%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 280 50% 15%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 280 50% 15%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 273 91% 31%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 280 50% 15%;
+    --input: 280 50% 15%;
+    --ring: 273 91% 31%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.spotlight {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: conic-gradient(
+    from 90deg at 50% 0%,
+    rgba(255, 255, 255, 0) 0deg,
+    rgba(255, 255, 255, 0) 75deg,
+    rgba(255, 255, 255, 0.05) 80deg,
+    rgba(255, 255, 255, 0.1) 85deg,
+    rgba(255, 255, 255, 0.2) 90deg,
+    rgba(255, 255, 255, 0.1) 95deg,
+    rgba(255, 255, 255, 0.05) 100deg,
+    rgba(255, 255, 255, 0) 105deg,
+    rgba(255, 255, 255, 0) 360deg
+  );
+  clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.dark .spotlight {
+  opacity: 1;
+  animation: spotlight-pulse 4s ease-in-out infinite;
+}
+
+@keyframes spotlight-pulse {
+  0%,
+  100% {
+    opacity: 0.8;
+    filter: blur(0px);
+  }
+  50% {
+    opacity: 0.6;
+    filter: blur(2px);
+  }
+}
+
+.name-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.name-glow {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.4), 0 0 60px rgba(255, 255, 255, 0.2);
+  animation: text-pulse 4s ease-in-out infinite;
+}
+
+@keyframes text-pulse {
+  0%,
+  100% {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.4), 0 0 60px rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.3), 0 0 45px
+      rgba(255, 255, 255, 0.15);
+  }
+}
+
+.lamp-wire {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  background-color: #666;
+  transform: translateX(-50%);
+  z-index: 5;
+}
