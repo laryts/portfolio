@@ -30,7 +30,7 @@ export function AboutSection({ dictionary }: AboutSectionProps) {
               </a>
               <a
                 href="#projects"
-                className="px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors duration-300"
+                className="px-6 py-2 rounded-full border-2 border-deep-purple-900 text-deep-purple-900 dark:text-deep-purple-400 hover:bg-deep-purple-900 hover:text-white transition-colors duration-300"
               >
                 {dictionary.about.projectsButton}
               </a>

@@ -20,7 +20,7 @@ export const dictionary = {
   about: {
     title: "About Me",
     description:
-      "Hi, I'm Larissa, a Senior Software Engineer with 8 years of professional experience specializing in React and scalable web solutions. Known for delivering impactful products and leading teams to success, I excel in creating innovative applications while fostering collaboration across diverse teams.",
+      "Hii, I'm Larissa — a Senior Software Engineer with 8 years of experience turning ideas into scalable, user-focused web applications. I specialize in React, thrive in collaborative environments, and love building products that make a difference. Whether leading a team or writing clean, thoughtful code, I'm driven by purpose and impact.",
     contactButton: "Contact me",
     projectsButton: "View projects",
     downloadResume: "Download Resume",
@@ -44,49 +44,79 @@ export const dictionary = {
       stateManagement: "State Management",
       devOps: "DevOps & Tools",
       database: "Database",
+      leadership: "Leadership",
       others: "Others",
     },
   },
   // Experience section
   experience: {
     title: "Experience",
-    roles: {
-      softwareEngineerManager: {
+    viewAll: "View all",
+    viewLess: "View less",
+    roles: [
+      {
         role: "Software Engineer Manager",
         company: "Unifique",
+        url: "https://unifique.com.br/",
         period: "AUG 2024 - FEB 2025",
         description:
           "Overseeing software development teams, ensuring timely delivery of scalable and innovative solutions. Acting as a bridge between Product (PMs and designers) and Technology teams, facilitating clear communication and alignment on project goals. Leading the design and implementation of technical strategies to enhance application performance and maintainability. Mentoring engineers and fostering a collaborative development culture across cross-functional teams.",
+        technologies: [],
       },
-      seniorFrontEndMercadoLivre: {
+      {
         role: "Senior Front End Engineer",
         company: "Mercado Livre",
+        url: "https://mercadolivre.com/",
         period: "NOV 2023 - AUG 2024",
         description:
           "Spearheaded the development of a logistics optimization platform using React and Node.js, reducing operational delivery costs and enhancing efficiency. Maintained and improved internal tools for logistics management, supporting cross-functional team objectives. Collaborated with designers and backend developers to ensure seamless integration and high-quality deliverables.",
+        technologies: ["React", "Node.js", "Zustand", "DataDog", "GIT", "Jira", "Figma"],
       },
-      seniorMobileEngineer: {
+      {
         role: "Senior Mobile Engineer and Supervisor",
         company: "Méliuz",
+        url: "https://www.meliuz.com.br/",
         period: "NOV 2021 - AUG 2023",
         description:
           "Managed a team of developers, mentoring and guiding them to deliver high-quality solutions. Led mobile development projects using React Native and React, optimizing app performance and integrating advanced analytics tools to track user engagement. Delivered scalable fintech solutions, including a help center module and internal tools, improving customer satisfaction and operational workflows.",
+        technologies: ["React Native", "React", "Zustand", "DataDog", "GIT", "Jira", "Figma"],
       },
-      seniorFrontEndEverest: {
+      {
         role: "Senior Front End Engineer",
         company: "Everest",
         period: "JAN 2023 - JUN 2023",
         description:
           "Developed reusable UI components and contributed to the company's design system. Ensured quality and consistency across applications by leveraging tools like Storybook and collaborating with UI/UX designers.",
+        technologies: ["React", "UI", "Design System", "Content Dev", "Storybook"],
       },
-      seniorFrontEndPicPay: {
+      {
         role: "Senior Front End Engineer and Technical Lead",
         company: "PicPay",
+        url: "https://picpay.com.br/",
         period: "AUG 2020 - OCT 2021",
         description:
           "Led frontend teams and established best practices, ensuring high-quality deliverables across multiple projects. Designed and maintained a scalable design system using StencilJS, significantly improving development speed and UI consistency. Facilitated team training sessions and authored technical documentation to upskill team members.",
+        technologies: ["React", "UI", "Design System", "Content Dev", "Storybook"],
       },
-    },
+      {
+        role: "Front End Engineer",
+        company: "BRQ",
+        url: "https://brq.com.br/",
+        period: "AUG 2019 - AUG 2020",
+        description:
+          "Developed frontend features for large-scale banking systems using Angular. Collaborated closely with design and backend teams to ensure seamless integration and optimal performance.",
+        technologies: ["Angular", "GIT", "Jira", "Sketch"],
+      },
+      {
+        role: "Full Stack Engineer",
+        company: "Manager Fashion",
+        url: "https://managerfashion.com.br/",
+        period: "MAR 2017 - JUL 2019",
+        description:
+          "Delivered full stack web solutions using VueJS and Laravel, enhancing client satisfaction through optimized SEO and responsive designs. Designed and implemented web applications, along with graphic designs for digital and print media.",
+        technologies: ["VueJS", "Laravel", "GIT", "PHP", "Photoshop", "Illustrator"],
+      },
+    ],
   },
   // Blog section
   blog: {
@@ -157,32 +187,50 @@ export const dictionary = {
       title: "Cat Lover",
       description:
         "Proud parent of two adorable cats who often supervise my coding sessions from the comfort of my keyboard. Joey (tuxedo) and Jack (tabby).",
-    },
-    hobbies: {
+    },hobbies: {
       title: "Hobbies & Interests",
       items: [
         {
-          name: "Photography",
-          description: "Amateur photographer who loves capturing urban landscapes and nature.",
+          name: "Cats",
+          description:
+            "I was lucky enough to adopt two adorable cats who often supervise my coding sessions from the comfort of my keyboard: Joey (tuxedo) and Jack (tabby).",
+        },
+        {
+          name: "Traveling",
+          description:
+            "Traveling is my therapy. I’ve visited over 10 countries so far — and my bucket list keeps growing (no shame 😄).",
         },
         {
           name: "Reading",
-          description: "Avid reader of sci-fi novels and technical books. Always looking for recommendations!",
+          description:
+            "I'm a big fan of suspense novels, especially those with unexpected plot twists that catch me off guard. I also love historical fiction/non-fiction — World War II is one of my favorite topics. Always open to recommendations!",
         },
         {
-          name: "Cooking",
-          description: "Experimenting with new recipes and cuisines is my way to relax after a long day of coding.",
+          name: "Disney",
+          description:
+            "I'm absolutely in love with the entire Disney universe — from classics to new releases! I love visiting the parks, watching (and rewatching) the movies, collecting Mickey-themed goodies, and getting emotional over every magical detail. ✨🐭",
         },
         {
-          name: "Hiking",
-          description: "Finding peace and inspiration in nature trails and mountain views.",
+          name: "Food",
+          description:
+            "I'm a true foodie! When I travel, one of my favorite things is to find new places to eat and explore local flavors.",
+        },
+        // {
+        //   name: "Photography",
+        //   description:
+        //     "Amateur photographer in my free time, passionate about capturing urban landscapes and natural scenery.",
+        // },
+        {
+          name: "Games",
+          description:
+            "Board games, puzzles, and video games have been long-time friends. Add wine and good company, and it’s the perfect combo!",
         },
       ],
-    },
+    },    
     talkTopics: {
       title: "Let's Talk About",
       description: "Beyond tech, I love discussing:",
-      topics: ["Disney", "Travel adventures", "Wine", "Board games", "Cats", "Friends"],
+      topics: ["Disney", "Travel adventures", "Wine", "Board games", "Cats", "Series (Friends <3)"],
     },
   },
 }

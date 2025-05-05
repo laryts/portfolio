@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { AnimateOnScroll } from "../animate-on-scroll";
 import { ExperienceItem } from "../experience-item";
 
@@ -6,6 +9,18 @@ type ExperiencesSectionProps = {
 }
 
 export function ExperiencesSection({ dictionary }: ExperiencesSectionProps) {
+    const [moreExperience, setMoreExperience] = useState(false);
+    const experiences = dictionary.experience.roles;
+    const length = Object.keys(experiences).length;
+
+    const toggleMoreExperience = (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      setMoreExperience(!moreExperience);
+      if (moreExperience) {
+        document.getElementById('xp')?.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
     return (
         <section
           id="xp"
@@ -16,75 +31,38 @@ export function ExperiencesSection({ dictionary }: ExperiencesSectionProps) {
               <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">{dictionary.experience.title}</h2>
             </AnimateOnScroll>
             <div className="space-y-12">
-              <AnimateOnScroll animation="slide-up" duration={0.6} delay={0.1}>
-                <ExperienceItem
-                  role={dictionary.experience.roles.softwareEngineerManager.role}
-                  company={dictionary.experience.roles.softwareEngineerManager.company}
-                  period={dictionary.experience.roles.softwareEngineerManager.period}
-                  description={dictionary.experience.roles.softwareEngineerManager.description}
-                  technologies={["React", "Next.js", "TypeScript", "Node.js"]}
-                />
-              </AnimateOnScroll>
-              <AnimateOnScroll animation="slide-up" duration={0.6} delay={0.2}>
-                <ExperienceItem
-                  role={dictionary.experience.roles.seniorFrontEndMercadoLivre.role}
-                  company={dictionary.experience.roles.seniorFrontEndMercadoLivre.company}
-                  period={dictionary.experience.roles.seniorFrontEndMercadoLivre.period}
-                  description={dictionary.experience.roles.seniorFrontEndMercadoLivre.description}
-                  technologies={["React", "Zustand", "Node", "DataDog", "GIT", "Jira", "Figma"]}
-                />
-              </AnimateOnScroll>
-              <AnimateOnScroll animation="slide-up" duration={0.6} delay={0.3}>
-                <ExperienceItem
-                  role={dictionary.experience.roles.seniorMobileEngineer.role}
-                  company={dictionary.experience.roles.seniorMobileEngineer.company}
-                  period={dictionary.experience.roles.seniorMobileEngineer.period}
-                  description={dictionary.experience.roles.seniorMobileEngineer.description}
-                  technologies={[
-                    "React Native",
-                    "React",
-                    "Node",
-                    "AWS",
-                    "DataDog",
-                    "Amplitude",
-                    "GIT",
-                    "Styled Components",
-                    "Jira",
-                    "Figma",
-                  ]}
-                />
-              </AnimateOnScroll>
-              <AnimateOnScroll animation="slide-up" duration={0.6} delay={0.4}>
-                <ExperienceItem
-                  role={dictionary.experience.roles.seniorFrontEndEverest.role}
-                  company={dictionary.experience.roles.seniorFrontEndEverest.company}
-                  period={dictionary.experience.roles.seniorFrontEndEverest.period}
-                  description={dictionary.experience.roles.seniorFrontEndEverest.description}
-                  technologies={["React", "UI", "Design System", "Content Dev", "Storybook"]}
-                />
-              </AnimateOnScroll>
-              <AnimateOnScroll animation="slide-up" duration={0.6} delay={0.5}>
-                <ExperienceItem
-                  role={dictionary.experience.roles.seniorFrontEndPicPay.role}
-                  company={dictionary.experience.roles.seniorFrontEndPicPay.company}
-                  period={dictionary.experience.roles.seniorFrontEndPicPay.period}
-                  description={dictionary.experience.roles.seniorFrontEndPicPay.description}
-                  technologies={[
-                    "Angular",
-                    "Docusaurus",
-                    "Node",
-                    "AWS",
-                    "StencilJS",
-                    "Tailwind",
-                    "Google Analytics",
-                    "Swagger",
-                    "GIT",
-                    "Figma",
-                    "Jira",
-                  ]}
-                />
-              </AnimateOnScroll>
+              {experiences.map((experience: any, index: number) => (
+                (index <= 2 || moreExperience) && (
+                  <AnimateOnScroll 
+                    className="transform transition-all duration-500 ease-in-out"
+                    animation="slide-up" 
+                    duration={0.6} 
+                    delay={index/10}
+                  >
+                    <ExperienceItem
+                      role={experience.role}
+                      company={experience.company}
+                      period={experience.period}
+                      description={experience.description}
+                      technologies={experience.technologies}
+                    />
+                  </AnimateOnScroll>
+                )
+              ))}
             </div>
+            <AnimateOnScroll animation="fade" duration={0.6} delay={0.4}>
+              <div className="flex justify-center my-8">
+              <div className="mt-12 text-center">
+              <button
+                onClick={toggleMoreExperience}
+                className="inline-flex items-center px-6 py-3 rounded-lg bg-deep-purple-900 text-white font-medium hover:bg-deep-purple-800 transition-colors duration-300"
+              >
+                {moreExperience ? dictionary.experience.viewLess : dictionary.experience.viewAll}
+              </button>
+            </div>
+                {/* <button onClick={toggleMoreExperience} className="text-center text-primary hover:text-primary/80 px-4 py-2 rounded-md dark:text-white dark:hover:text-gray-300">Ver {moreExperience ? "menos" : "mais"}</button> */}
+              </div>
+            </AnimateOnScroll>
           </div>
         </section>
     )

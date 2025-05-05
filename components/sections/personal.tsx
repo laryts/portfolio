@@ -1,6 +1,6 @@
 "use client"
 
-import { Camera, Book, Coffee, Mountain, Heart, MessageCircle } from "lucide-react"
+import { Camera, Book, Coffee, Mountain, Heart, MessageCircle, Globe, Plane, Sandwich, PawPrint, Castle } from "lucide-react"
 import { AnimateOnScroll } from "../animate-on-scroll"
 import Image from "next/image"
 
@@ -14,18 +14,26 @@ export function PersonalSection({ dictionary }: PersonalSectionProps) {
   // Map hobby names to icons
   const getHobbyIcon = (name: string) => {
     switch (name.toLowerCase()) {
+      case "cats":
+      case "gatos":
+        return <PawPrint className="w-6 h-6 text-deep-purple-600 dark:text-deep-purple-400" />
+      case "disney":
+        return <Castle className="w-6 h-6 text-deep-purple-600 dark:text-deep-purple-400" />
       case "photography":
       case "fotografia":
         return <Camera className="w-6 h-6 text-deep-purple-600 dark:text-deep-purple-400" />
       case "reading":
       case "leitura":
         return <Book className="w-6 h-6 text-deep-purple-600 dark:text-deep-purple-400" />
-      case "cooking":
-      case "culinária":
-        return <Coffee className="w-6 h-6 text-deep-purple-600 dark:text-deep-purple-400" />
+      case "traveling":
+      case "viagem":
+        return <Plane className="w-6 h-6 text-deep-purple-600 dark:text-deep-purple-400" />
       case "hiking":
       case "trilhas":
         return <Mountain className="w-6 h-6 text-deep-purple-600 dark:text-deep-purple-400" />
+      case "food":
+      case "comida":
+        return <Sandwich className="w-6 h-6 text-deep-purple-600 dark:text-deep-purple-400" />
       default:
         return <Heart className="w-6 h-6 text-deep-purple-600 dark:text-deep-purple-400" />
     }
@@ -39,8 +47,8 @@ export function PersonalSection({ dictionary }: PersonalSectionProps) {
       </AnimateOnScroll>
 
       {/* Cat Lover Section */}
-      <AnimateOnScroll animation="slide-up" duration={0.6} delay={0.1}>
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md mb-12">
+      {/* <AnimateOnScroll animation="slide-up" duration={0.6} delay={0.1}>
+        <div className="rounded-lg p-6 shadow-md mb-12">
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="w-full md:w-1/3 flex justify-center">
               <div className="relative w-64 h-64 rounded-full overflow-hidden border-4 border-deep-purple-200 dark:border-deep-purple-900">
@@ -56,7 +64,7 @@ export function PersonalSection({ dictionary }: PersonalSectionProps) {
             </div>
           </div>
         </div>
-      </AnimateOnScroll>
+      </AnimateOnScroll> */}
 
       {/* Hobbies Section */}
       <AnimateOnScroll animation="fade" duration={0.8} delay={0.2}>
