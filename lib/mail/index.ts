@@ -24,6 +24,9 @@ export async function sendEmail({
     throw new Error('BREVO_API_KEY is not defined');
   }
 
+  console.log('API Key length:', apiKey.length);
+  console.log('API Key prefix:', apiKey.substring(0, 4) + '...');
+
   apiInstance.setApiKey(SibApiV3Sdk.TransactionalEmailsApiApiKeys.apiKey, apiKey);
 
   const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
@@ -36,8 +39,16 @@ export async function sendEmail({
   try {
     const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
     return { success: true, data };
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error sending email:', error);
+    if (error.response) {
+      console.error('Full error response:', JSON.stringify({
+        status: error.response.status,
+        statusText: error.response.statusText,
+        body: error.response.body,
+        headers: error.response.headers
+      }, null, 2));
+    }
     throw error;
   }
 }
