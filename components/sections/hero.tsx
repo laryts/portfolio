@@ -6,6 +6,10 @@ type HeroSectionProps = {
 }
 
 export function HeroSection({ dictionary }: HeroSectionProps) {
+  if (!dictionary) {
+    return null
+  }
+
   return (
     <>
     <AnimateOnScroll animation="fade" duration={1.2}>

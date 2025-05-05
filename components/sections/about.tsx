@@ -5,6 +5,10 @@ type AboutSectionProps = {
 }
 
 export function AboutSection({ dictionary }: AboutSectionProps) {
+  if (!dictionary) {
+    return null
+  }
+
   return (
     <section id="about" className="py-20 px-4 md:px-8 max-w-6xl mx-auto">
       <AnimateOnScroll animation="fade" duration={0.8}>

@@ -34,6 +34,7 @@ export function ExperiencesSection({ dictionary }: ExperiencesSectionProps) {
               {experiences.map((experience: any, index: number) => (
                 (index <= 2 || moreExperience) && (
                   <AnimateOnScroll 
+                    key={experience.role + experience.company}
                     className="transform transition-all duration-500 ease-in-out"
                     animation="slide-up" 
                     duration={0.6} 

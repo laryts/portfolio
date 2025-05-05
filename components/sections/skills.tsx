@@ -85,6 +85,10 @@ const skills = {
 }
 
 export function SkillsSection({ dictionary }: SkillsSectionProps) {
+  if (!dictionary) {
+    return null
+  }
+
   return (
     <section id="skills" className="py-20 px-4 md:px-8 max-w-6xl mx-auto">
         <AnimateOnScroll animation="fade" duration={0.8}>

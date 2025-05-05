@@ -34,7 +34,11 @@ export default async function RootLayout({
   return (
     <html lang={resolvedParams.lang} suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange={false}>
+        <ThemeProvider 
+          attribute="class" 
+          defaultTheme="dark" 
+          storageKey="theme"
+        >
           <Header lang={resolvedParams.lang} dictionary={dictionary} />
           {children}
           <Footer dictionary={dictionary} />

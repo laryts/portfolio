@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter, usePathname } from "next/navigation"
 import type { Locale } from "@/types/i18n"
+import { useTheme } from "next-themes"
 
 interface LanguageSwitcherProps {
   currentLang: Locale
@@ -16,7 +17,6 @@ export function LanguageSwitcher({ currentLang }: LanguageSwitcherProps) {
   const toggleDropdown = () => setIsOpen(!isOpen)
 
   const changeLanguage = (newLocale: Locale) => {
-    // Navigate to the new locale
     router.push(`/${newLocale}`)
     setIsOpen(false)
   }
