@@ -201,7 +201,7 @@ function getLocale(request: NextRequest): string {
   }
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   try {
     const pathname = request.nextUrl.pathname
 
@@ -277,7 +277,7 @@ export function middleware(request: NextRequest) {
     return addSecurityHeaders(response)
   } catch (error) {
     // Catch any unexpected errors and log them
-    console.error('Middleware error:', error)
+    console.error('Proxy error:', error)
     // Return a response to prevent 5xx errors
     // Try to redirect to default locale, or allow request to continue
     try {
@@ -301,3 +301,4 @@ export const config = {
   // - public files (e.g. robots.txt)
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico|images|.*\\.svg).*)"],
 }
+
