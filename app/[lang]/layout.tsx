@@ -8,6 +8,7 @@ import { locales } from "@/proxy"
 import type { Locale } from "@/types/i18n"
 import { getDictionary } from "@/dictionaries"
 import { Footer } from "@/components/footer"
+import { normalizeUrl } from "@/lib/utils"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -18,7 +19,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const resolvedParams = await params
   const dictionary = await getDictionary(resolvedParams.lang)
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://larissasoares.dev"
+  const siteUrl = normalizeUrl(process.env.NEXT_PUBLIC_SITE_URL)
   
   const isEnglish = resolvedParams.lang === "en"
   const title = isEnglish 

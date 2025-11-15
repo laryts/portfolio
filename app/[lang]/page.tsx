@@ -1,5 +1,6 @@
 import { getDictionary } from "@/dictionaries"
 import type { Locale } from "@/types/i18n"
+import { normalizeUrl } from "@/lib/utils"
 import { 
   PersonalSection, 
   HeroSection, 
@@ -19,7 +20,7 @@ export default async function Home({
 }) {
   const { lang } = await params
   const dictionary = await getDictionary(lang)
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://larissasoares.dev"
+  const siteUrl = normalizeUrl(process.env.NEXT_PUBLIC_SITE_URL)
 
   // Structured data for Person/Profile
   const structuredData = {

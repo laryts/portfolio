@@ -2,11 +2,14 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
+import { normalizeUrl } from "@/lib/utils"
 
 const inter = Inter({ subsets: ["latin"] })
 
+const siteUrl = normalizeUrl(process.env.NEXT_PUBLIC_SITE_URL)
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://larissasoares.dev"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Larissa Soares | Senior Software Engineer",
     template: "%s | Larissa Soares",

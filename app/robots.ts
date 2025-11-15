@@ -1,7 +1,8 @@
 import { MetadataRoute } from "next"
+import { normalizeUrl } from "@/lib/utils"
 
 export default function robots(): MetadataRoute.Robots {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://larissasoares.dev"
+  const siteUrl = normalizeUrl(process.env.NEXT_PUBLIC_SITE_URL)
 
   return {
     rules: [
