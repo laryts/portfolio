@@ -103,7 +103,7 @@ export function ContactSection({ dictionary }: ContactSectionProps) {
                                 name="name"
                                 required
                                 placeholder={dictionary.contact.form.name}
-                                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-deep-purple-500"
+                                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-hidden focus:ring-2 focus:ring-deep-purple-500"
                             />
                         </div>
                         <div>
@@ -112,7 +112,7 @@ export function ContactSection({ dictionary }: ContactSectionProps) {
                                 name="email"
                                 required
                                 placeholder={dictionary.contact.form.email}
-                                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-deep-purple-500"
+                                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-hidden focus:ring-2 focus:ring-deep-purple-500"
                             />
                         </div>
                         <div>
@@ -121,7 +121,7 @@ export function ContactSection({ dictionary }: ContactSectionProps) {
                                 required
                                 placeholder={dictionary.contact.form.message}
                                 rows={4}
-                                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-deep-purple-500"
+                                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-hidden focus:ring-2 focus:ring-deep-purple-500"
                             ></textarea>
                         </div>
                         {submitStatus && (

@@ -118,7 +118,7 @@ interface ButtonProps {
   title: string;
   onPress: () => void;
   disabled?: boolean;
-  variant?: 'primary' | 'secondary' | 'outline';
+  variant?: 'primary' | 'secondary' | 'outline-solid';
   size?: 'small' | 'medium' | 'large';
 }
 
