@@ -43,6 +43,7 @@ export function ExperiencesSection({ dictionary }: ExperiencesSectionProps) {
                     <ExperienceItem
                       role={experience.role}
                       company={experience.company}
+                      url={experience.url}
                       period={experience.period}
                       description={experience.description}
                       technologies={experience.technologies}

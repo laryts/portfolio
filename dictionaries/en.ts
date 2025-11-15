@@ -55,6 +55,15 @@ export const dictionary = {
     viewLess: "View less",
     roles: [
       {
+        role: "Co-founder & CTO",
+        company: "niido",
+        url: "https://niido.app/",
+        period: "NOV 2024 - Present",
+        description:
+          "Co-founder and CTO of niido, leading the company with empathy, purpose, and a real desire to make a difference. Applying technology experience to create tools that welcome, facilitate, and make sense in real life. Seeing in the proposal a space where innovation and sensitivity truly meet, building solutions that go beyond code.",
+        technologies: ["React", "React Native", "Next.js", "Node.js", "Tailwind", "Expo", "Zustand", "Supabase", "Postgres", "N8N", "CI/CD", "Sentry", "GIT", "Figma"],
+      },
+      {
         role: "Software Engineer Manager",
         company: "Unifique",
         url: "https://unifique.com.br/",

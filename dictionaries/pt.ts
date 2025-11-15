@@ -56,6 +56,15 @@ export const dictionary = {
     viewLess: "Ver menos",
     roles: [
       {
+        role: "CTO & Co-fundadora",
+        company: "niido",
+        url: "https://niido.app/",
+        period: "NOV 2024 - Atual",
+        description:
+          "Co-fundadora e CTO do niido, liderando a empresa com empatia, propósito e vontade real de fazer a diferença. Aplicando experiência em tecnologia para criar ferramentas que acolhem, facilitam e fazem sentido na vida real. Enxergando na proposta um espaço onde inovação e sensibilidade realmente se encontram, construindo soluções que vão além do código.",
+        technologies: ["React", "React Native", "Next.js", "Node.js", "Tailwind", "Expo", "Zustand", "Supabase", "Postgres", "N8N", "CI/CD", "Sentry", "GIT", "Figma"],
+      },
+      {
         role: "Gerente de Engenharia de Software",
         company: "Unifique",
         url: "https://unifique.com.br/",
