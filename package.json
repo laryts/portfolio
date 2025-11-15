@@ -71,6 +71,7 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@types/negotiator": "^0.6.4",
     "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
