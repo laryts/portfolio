@@ -299,6 +299,7 @@ export const config = {
   // - _next/image (image optimization files)
   // - favicon.ico (favicon file)
   // - public files (e.g. robots.txt)
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|images|.*\\.svg).*)"],
+  // - ingest routes (PostHog - handled by rewrites)
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|images|ingest|.*\\.svg).*)"],
 }
 

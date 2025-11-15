@@ -1,6 +1,8 @@
 import { getDictionary } from "@/dictionaries"
 import type { Locale } from "@/types/i18n"
 import { normalizeUrl } from "@/lib/utils"
+import { locales } from "@/proxy"
+import { notFound } from "next/navigation"
 import { 
   PersonalSection, 
   HeroSection, 
@@ -19,7 +21,19 @@ export default async function Home({
   params: Promise<{ lang: Locale }>
 }) {
   const { lang } = await params
+  
+  // Validate locale is valid
+  if (!locales.includes(lang as Locale)) {
+    notFound()
+  }
+  
   const dictionary = await getDictionary(lang)
+  
+  // Validate dictionary is loaded
+  if (!dictionary || !dictionary.about) {
+    throw new Error(`Dictionary not loaded properly for locale: ${lang}`)
+  }
+  
   const siteUrl = normalizeUrl(process.env.NEXT_PUBLIC_SITE_URL)
 
   // Structured data for Person/Profile
@@ -49,7 +63,7 @@ export default async function Home({
     ],
     alumniOf: {
       "@type": "Organization",
-      name: dictionary.education?.institution || "University",
+      name: dictionary?.education?.institution || "University",
     },
   }
 

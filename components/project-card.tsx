@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ExternalLink } from "lucide-react"
 import { motion } from "framer-motion"
+import posthog from 'posthog-js'
 
 interface ProjectCardProps {
   title: string
@@ -29,6 +30,9 @@ export function ProjectCard({ title, description, imageUrl, projectUrl, viewProj
         <Link
           href={projectUrl}
           className="inline-flex items-center text-deep-purple-900 dark:text-deep-purple-400 hover:text-deep-purple-800 dark:hover:text-deep-purple-300 transition-colors"
+          onClick={() => {
+            posthog.capture('project_link_clicked', { project_title: title, project_url: projectUrl })
+          }}
         >
           {viewProjectText} <ExternalLink size={16} className="ml-1" />
         </Link>

@@ -19,3 +19,4 @@ export function Footer({ dictionary }: FooterProps) {
         </footer>
     )
 }
+      

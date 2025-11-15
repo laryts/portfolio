@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { getGitHubContributions } from "@/app/actions/github"
 import { AnimateOnScroll } from "./animate-on-scroll"
+import posthog from "posthog-js"
 
 interface GitHubContributionsChartProps {
   username: string
@@ -34,9 +35,11 @@ export function GitHubContributionsChart({
         const data = await getGitHubContributions(username)
         console.log("data", data)
         setContributions(data)
+        posthog.capture("github-contributions-loaded", { username: username, total_contributions: data.total })
       } catch (error) {
         console.error("Error in component:", error)
         setContributions({ total: 0, days: [], error: "Failed to load contributions" })
+        posthog.capture("github-contributions-load-failed", { username: username, error: error instanceof Error ? error.message : String(error) })
       } finally {
         setLoading(false)
       }

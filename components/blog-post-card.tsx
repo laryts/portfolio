@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { Calendar, ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
+import posthog from 'posthog-js'
 
 interface BlogPostCardProps {
   title: string
@@ -44,6 +45,7 @@ export function BlogPostCard({ title, date, summary, tags, slug, readMoreText }:
         <Link
           href={`/blog/${slug}`}
           className="inline-flex items-center text-deep-purple-900 dark:text-deep-purple-400 hover:text-deep-purple-800 dark:hover:text-deep-purple-300 transition-colors"
+          onClick={() => posthog.capture('blog_post_card_read_more_clicked', { slug, title, tags })}
         >
           {readMoreText} <ArrowRight size={16} className="ml-1" />
         </Link>

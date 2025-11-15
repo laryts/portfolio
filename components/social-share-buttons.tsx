@@ -1,5 +1,6 @@
 "use client"
 
+import posthog from 'posthog-js'
 import { useState } from "react"
 import { Twitter, Linkedin, Facebook, LinkIcon } from "lucide-react"
 
@@ -25,6 +26,7 @@ export function SocialShareButtons({ url, title, className = "", language = "en"
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(url)
+      posthog.capture('article-link-copied', { url: url, title: title })
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch (err) {
@@ -43,6 +45,7 @@ export function SocialShareButtons({ url, title, className = "", language = "en"
           href={shareLinks.twitter}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => posthog.capture('article-shared', { platform: 'twitter', url: url, title: title })}
           className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-deep-purple-100 dark:hover:bg-deep-purple-900 transition-colors"
           aria-label={language === "en" ? "Share on Twitter" : "Compartilhar no Twitter"}
         >
@@ -52,6 +55,7 @@ export function SocialShareButtons({ url, title, className = "", language = "en"
           href={shareLinks.linkedin}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => posthog.capture('article-shared', { platform: 'linkedin', url: url, title: title })}
           className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-deep-purple-100 dark:hover:bg-deep-purple-900 transition-colors"
           aria-label={language === "en" ? "Share on LinkedIn" : "Compartilhar no LinkedIn"}
         >
@@ -61,6 +65,7 @@ export function SocialShareButtons({ url, title, className = "", language = "en"
           href={shareLinks.facebook}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => posthog.capture('article-shared', { platform: 'facebook', url: url, title: title })}
           className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-deep-purple-100 dark:hover:bg-deep-purple-900 transition-colors"
           aria-label={language === "en" ? "Share on Facebook" : "Compartilhar no Facebook"}
         >

@@ -196,7 +196,8 @@ export const dictionary = {
       title: "Cat Lover",
       description:
         "Proud parent of two adorable cats who often supervise my coding sessions from the comfort of my keyboard. Joey (tuxedo) and Jack (tabby).",
-    },hobbies: {
+    },
+    hobbies: {
       title: "Hobbies & Interests",
       items: [
         {

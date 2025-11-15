@@ -1,3 +1,6 @@
+"use client"
+
+import posthog from 'posthog-js';
 import { AnimateOnScroll } from "../animate-on-scroll";
 import { LightBulb } from "../light-bulb";
 
@@ -39,6 +42,7 @@ export function HeroSection({ dictionary }: HeroSectionProps) {
           <a
             href="#about"
             className="px-6 py-3 rounded-full bg-deep-purple-900 text-white hover:bg-deep-purple-800 transition-colors duration-300"
+            onClick={() => posthog.capture('hero_cta_clicked', { cta_text: dictionary.hero.cta, cta_link: '#about' })}
           >
             {dictionary.hero.cta}
           </a>

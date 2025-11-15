@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "../globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { PostHogProvider } from "@/components/posthog-provider"
 import { Header } from "@/components/header"
 import { locales } from "@/proxy"
 import type { Locale } from "@/types/i18n"
@@ -113,15 +114,17 @@ export default async function RootLayout({
   return (
     <html lang={resolvedParams.lang} suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider 
-          attribute="class" 
-          defaultTheme="dark" 
-          storageKey="theme"
-        >
-          <Header lang={resolvedParams.lang} dictionary={dictionary} />
-          {children}
-          <Footer dictionary={dictionary} />
-        </ThemeProvider>
+        <PostHogProvider>
+          <ThemeProvider 
+            attribute="class" 
+            defaultTheme="dark" 
+            storageKey="theme"
+          >
+            <Header lang={resolvedParams.lang} dictionary={dictionary} />
+            {children}
+            <Footer dictionary={dictionary} />
+          </ThemeProvider>
+        </PostHogProvider>
       </body>
     </html>
   )

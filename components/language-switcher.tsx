@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useRouter, usePathname } from "next/navigation"
 import type { Locale } from "@/types/i18n"
 import { useTheme } from "next-themes"
+import posthog from 'posthog-js'
 
 interface LanguageSwitcherProps {
   currentLang: Locale
@@ -14,9 +15,17 @@ export function LanguageSwitcher({ currentLang }: LanguageSwitcherProps) {
   const router = useRouter()
   const pathname = usePathname()
 
-  const toggleDropdown = () => setIsOpen(!isOpen)
+  const toggleDropdown = () => {
+    posthog.capture('language-switcher-toggled', { opened: !isOpen })
+    setIsOpen(!isOpen)
+  }
 
   const changeLanguage = (newLocale: Locale) => {
+    posthog.capture('language-changed', {
+      from_locale: currentLang,
+      to_locale: newLocale,
+      current_path: pathname
+    })
     router.push(`/${newLocale}`)
     setIsOpen(false)
   }

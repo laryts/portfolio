@@ -1,5 +1,6 @@
 'use client'
 
+import posthog from 'posthog-js';
 import { AnimateOnScroll } from "../animate-on-scroll";
 import { ContactLink } from "../contact-link";
 import { sendEmail } from "@/lib/mail";
@@ -36,12 +37,21 @@ export function ContactSection({ dictionary }: ContactSectionProps) {
                 throw new Error('Failed to send message');
             }
 
+            posthog.capture('contact-form-submitted', {
+                name_length: name.length,
+                message_length: message.length
+            });
             setSubmitStatus({
                 type: 'success',
                 message: dictionary.contact.form.successMessage || 'Message sent successfully!'
             });
             (event.target as HTMLFormElement).reset();
         } catch (error) {
+            posthog.capture('contact-form-submission-failed', {
+                name_length: name.length,
+                message_length: message.length,
+                error_message: (error as Error).message
+            });
             setSubmitStatus({
                 type: 'error',
                 message: dictionary.contact.form.errorMessage || 'Failed to send message. Please try again.'
@@ -68,13 +78,22 @@ export function ContactSection({ dictionary }: ContactSectionProps) {
                             href="mailto:laritavaressoares@gmail.com"
                             label="Email"
                         />
-                        <ContactLink platform="github" href="https://github.com/laryts" label="GitHub" />
-                        <ContactLink platform="linkedin" href="https://linkedin.com/in/laryts" label="LinkedIn" />
+                        <ContactLink 
+                            platform="github" 
+                            href="https://github.com/laryts" 
+                            label="GitHub" 
+                        />
+                        <ContactLink 
+                            platform="linkedin" 
+                            href="https://linkedin.com/in/laryts" 
+                            label="LinkedIn" 
+                        />
                     </div>
                     <div className="mt-6">
                         <a
                             href="/resume-larissa-soares.pdf"
                             download
+                            onClick={() => posthog.capture('resume-downloaded', { file_path: '/resume-larissa-soares.pdf' })}
                             className="inline-flex items-center px-6 py-3 rounded-lg bg-deep-purple-900 text-white font-medium hover:bg-deep-purple-800 transition-colors duration-300"
                         >
                             <svg

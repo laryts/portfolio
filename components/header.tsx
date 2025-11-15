@@ -7,6 +7,7 @@ import { Menu, X, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import type { Locale } from "@/types/i18n"
 import { LanguageSwitcher } from "./language-switcher"
+import posthog from 'posthog-js'
 
 interface HeaderProps {
   lang: Locale
@@ -31,11 +32,14 @@ export function Header({ lang, dictionary }: HeaderProps) {
   }, [])
 
   const toggleMenu = () => {
+    posthog.capture('mobile_menu_toggled', { open: !isMenuOpen })
     setIsMenuOpen(!isMenuOpen)
   }
 
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark")
+    const newTheme = theme === "dark" ? "light" : "dark"
+    posthog.capture('theme_toggled', { new_theme: newTheme })
+    setTheme(newTheme)
   }
 
   const navLinks = [
@@ -65,6 +69,7 @@ export function Header({ lang, dictionary }: HeaderProps) {
               key={link.href}
               href={link.href}
               className="text-gray-700 dark:text-gray-300 hover:text-deep-purple-900 dark:hover:text-deep-purple-400 transition-colors"
+              onClick={() => posthog.capture('navigation_link_clicked', { link: link.href, location: 'desktop' })}
             >
               {link.label}
             </Link>
@@ -112,7 +117,10 @@ export function Header({ lang, dictionary }: HeaderProps) {
                 key={link.href}
                 href={link.href}
                 className="text-gray-700 dark:text-gray-300 hover:text-deep-purple-900 dark:hover:text-deep-purple-400 transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => {
+                  posthog.capture('navigation_link_clicked', { link: link.href, location: 'mobile' })
+                  setIsMenuOpen(false)
+                }}
               >
                 {link.label}
               </Link>

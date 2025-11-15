@@ -197,7 +197,8 @@ export const dictionary = {
       title: "Amante de Gatos",
       description:
         "Tive a sorte de adotar dois adoráveis gatinhos que frequentemente supervisionam minhas sessões de programação do conforto do meu teclado. Joey (frajola) e Jack (rajado).",
-    },hobbies: {
+    },
+    hobbies: {
       title: "Hobbies & Interesses",
       items: [
         {
