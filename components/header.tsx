@@ -43,7 +43,7 @@ export function Header({ lang, dictionary }: HeaderProps) {
     // { href: `/${lang}#projects`, label: dictionary.nav.projects },
     { href: `/${lang}#skills`, label: dictionary.nav.skills },
     { href: `/${lang}#xp`, label: dictionary.nav.experience },
-    { href: `/${lang}#blog`, label: dictionary.nav.blog },
+    // { href: `/${lang}#blog`, label: dictionary.nav.blog },
     { href: `/${lang}#contact`, label: dictionary.nav.contact },
   ]
 
