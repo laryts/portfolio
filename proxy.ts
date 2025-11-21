@@ -37,6 +37,65 @@ const BLOCKED_PATHS = [
   '/.well-known',
   '/.htaccess',
   '/.htpasswd',
+  // Backup directories (common scanner targets)
+  '/bak',
+  '/old',
+  '/restore',
+  '/back',
+  '/archive',
+  '/archives',
+]
+
+// Security: Blocked file extensions (common attack targets)
+const BLOCKED_EXTENSIONS = [
+  '.zip',
+  '.rar',
+  '.tar',
+  '.gz',
+  '.tar.gz',
+  '.sql',
+  '.sql.gz',
+  '.sql.bz2',
+  '.dump',
+  '.bak',
+  '.backup',
+  '.old',
+  '.dat',
+  '.db',
+  '.sqlite',
+  '.sqlite3',
+]
+
+// Security: Blocked file names (sensitive files scanners look for)
+const BLOCKED_FILES = [
+  'config.js',
+  'config.json',
+  'config.php',
+  'config.ini',
+  'config.yml',
+  'config.yaml',
+  'database.php',
+  'db.php',
+  'mysql.sql',
+  'database.sql',
+  'backup.sql',
+  'dump.sql',
+  'wallet.dat',
+  'credentials',
+  'password',
+  'passwords',
+  'secrets',
+  'secret',
+  '.env',
+  '.env.local',
+  '.env.production',
+  'public_html.zip',
+  'public_html.tar',
+  'website.rar',
+  'website.zip',
+  'directory.zip',
+  'directory.tar',
+  'full_backup',
 ]
 
 // Security: Suspicious user agents (bots/scanners)
@@ -83,9 +142,37 @@ function cleanupRateLimit() {
 // Security: Check if path should be blocked
 function isBlockedPath(pathname: string): boolean {
   const normalizedPath = pathname.toLowerCase()
-  return BLOCKED_PATHS.some(blockedPath => 
+  
+  // Check against blocked directory paths
+  const matchesBlockedPath = BLOCKED_PATHS.some(blockedPath => 
     normalizedPath.includes(blockedPath.toLowerCase())
   )
+  if (matchesBlockedPath) return true
+  
+  // Check against blocked file extensions
+  const matchesBlockedExtension = BLOCKED_EXTENSIONS.some(ext => 
+    normalizedPath.endsWith(ext.toLowerCase())
+  )
+  if (matchesBlockedExtension) return true
+  
+  // Check against blocked file names (check if path contains any blocked filename)
+  const matchesBlockedFile = BLOCKED_FILES.some(file => 
+    normalizedPath.includes(file.toLowerCase())
+  )
+  if (matchesBlockedFile) return true
+  
+  // Block paths that look like backup/archive patterns
+  // e.g., /bak/, /old/, /restore/, /back/
+  const backupPatterns = [
+    /\/bak\//i,
+    /\/old\//i,
+    /\/restore\//i,
+    /\/back\//i,
+    /\/archive/i,
+  ]
+  if (backupPatterns.some(pattern => pattern.test(pathname))) return true
+  
+  return false
 }
 
 // Security: Check if user agent is suspicious
@@ -243,9 +330,14 @@ export function proxy(request: NextRequest) {
 
     // ===== SECURITY CHECKS =====
     
-    // 1. Block suspicious paths
+    // 1. Block suspicious paths (scanners looking for backups, configs, etc.)
     if (isBlockedPath(pathname)) {
-      console.warn(`[SECURITY] Blocked suspicious path: ${pathname} from IP: ${getClientIP(request)}`)
+      const ip = getClientIP(request)
+      // Only log occasionally to avoid log spam (log 1 in 10 blocked requests)
+      if (Math.random() < 0.1) {
+        console.warn(`[SECURITY] Blocked suspicious path: ${pathname} from IP: ${ip}`)
+      }
+      // Return 404 to not reveal that the path is blocked
       return new NextResponse('Not Found', { status: 404 })
     }
 
