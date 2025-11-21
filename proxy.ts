@@ -178,6 +178,27 @@ function addSecurityHeaders(response: NextResponse): NextResponse {
   return response
 }
 
+// Normalize locale string (extract language code from full locale)
+// This safely extracts a 2-letter language code from potentially malformed locale strings
+function normalizeLocale(locale: string): string | null {
+  if (!locale || typeof locale !== 'string') {
+    return null
+  }
+  
+  // Extract the primary language code (first 2-3 letters before any hyphen or special char)
+  // This handles cases like "en", "en-US", "en_US", "en-US-POSIX", etc.
+  const match = locale.match(/^([a-z]{2,3})(?:[-_].*)?$/i)
+  if (match && match[1]) {
+    const langCode = match[1].toLowerCase()
+    // Only accept 2-letter codes (ISO 639-1) to match our supported locales
+    if (langCode.length === 2 && /^[a-z]{2}$/.test(langCode)) {
+      return langCode
+    }
+  }
+  
+  return null
+}
+
 // Get the preferred locale from the request
 function getLocale(request: NextRequest): string {
   try {
@@ -193,9 +214,24 @@ function getLocale(request: NextRequest): string {
       return defaultLocale
     }
 
-    return match(languages, locales, defaultLocale)
+    // Filter and normalize languages before passing to match
+    // This prevents Intl.getCanonicalLocales errors from invalid locale strings
+    const validLanguages = languages
+      .map(lang => normalizeLocale(lang))
+      .filter((lang): lang is string => lang !== null) // Remove nulls
+      .filter((lang, index, self) => self.indexOf(lang) === index) // Remove duplicates
+
+    // If no valid languages after filtering, use default
+    if (validLanguages.length === 0) {
+      return defaultLocale
+    }
+
+    // Now safely match with validated languages
+    // We know all languages are valid 2-letter codes at this point
+    return match(validLanguages, locales, defaultLocale)
   } catch (error) {
     // If there's any error in locale detection, fall back to default locale
+    // This catches any unexpected errors from match() or Negotiator
     console.error('Error detecting locale:', error)
     return defaultLocale
   }
