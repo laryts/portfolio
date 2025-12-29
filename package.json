@@ -52,7 +52,7 @@
     "input-otp": "1.4.2",
     "lucide-react": "^0.553.0",
     "negotiator": "latest",
-    "next": "16.0.3",
+    "next": "16.0.10",
     "next-sanity": "^11.6.6",
     "next-themes": "latest",
     "posthog-js": "^1.293.0",
