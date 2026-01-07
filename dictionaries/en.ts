@@ -11,7 +11,7 @@ export const dictionary = {
   // Hero section
   hero: {
     title: "Larissa Soares",
-    subtitle: "Senior Software Engineer",
+    subtitle: "Senior Front-End Engineer",
     cta: "View my work",
     lightMode: "Light Mode",
     darkMode: "Dark Mode",
@@ -20,7 +20,7 @@ export const dictionary = {
   about: {
     title: "About Me",
     description:
-      "Hii, I'm Larissa — a Senior Software Engineer with 8 years of experience turning ideas into scalable, user-focused web applications. I specialize in React, thrive in collaborative environments, and love building products that make a difference. Whether leading a team or writing clean, thoughtful code, I'm driven by purpose and impact.",
+      "Hi, I'm Larissa — a Senior Front-End Engineer with over 8 years of experience developing scalable web applications, with strong specialization in JavaScript and TypeScript. Worked on large-scale projects, including educational platforms, streaming, offline-first PWAs and complex administrative systems. Solid experience in frontend architecture, performance, accessibility, CI/CD and integration with authentication, analytics and microservices. Background at leading Latin American tech companies like Mercado Livre (100M+ users), Méliuz (15M+ users), and PicPay (70M+ users), working in agile environments and high technical complexity.",
     contactButton: "Contact me",
     projectsButton: "View projects",
     downloadResume: "Download Resume",
@@ -60,8 +60,16 @@ export const dictionary = {
         url: "https://niido.app/",
         period: "NOV 2024 - Present",
         description:
-          "Co-founder and CTO of niido, leading the company with empathy, purpose, and a real desire to make a difference. Applying technology experience to create tools that welcome, facilitate, and make sense in real life. Seeing in the proposal a space where innovation and sensitivity truly meet, building solutions that go beyond code.",
-        technologies: ["React", "React Native", "Next.js", "Node.js", "Tailwind", "Expo", "Zustand", "Supabase", "Postgres", "N8N", "CI/CD", "Sentry", "GIT", "Figma"],
+          "Co-founded and served as CTO of niido, a mobile application focused on user experience, front-end architecture and scalability. Defined technical architecture and stack using React Native (Expo), Next.js and TypeScript. Implemented complex state flows, authentication and timezone-sensitive notifications supporting multiple time zones. Built observability and analytics pipelines for performance and stability monitoring. Led hands-on frontend development, maintaining quality standards, tests and best practices.",
+        technologies: ["React Native", "Expo", "Next.js", "TypeScript", "TailwindCSS", "Supabase", "Neon", "Postgres", "Drizzle ORM", "Clerk", "Vercel", "PostHog", "Sentry"],
+      },
+      {
+        role: "Senior Front End Engineer",
+        company: "Cast Group",
+        period: "AUG 2025 – JAN 2025",
+        description:
+          "Led development of two large-scale educational platforms for Sebrae-SP, using Nuxt 3, Vue 3 and TypeScript. Built a streaming platform with administrative area (Studio), including: Complete CRUD of content (videos and metadata), User and permission management by profile, Keycloak integration (SSO), Analytics and monitoring dashboards, Offline-first PWA development (Sebrae Móvel) enabling access without internet connection, Interactive games and educational journeys, CI/CD pipeline implementation, code standardization and frontend best practices. Worked closely with designers, product and backend teams, ensuring UX consistency, performance and scalability.",
+        technologies: ["Nuxt 3", "Vue 3", "TypeScript", "Pinia", "TailwindCSS", "SCSS", "PWA", "Service Workers", "IndexedDB", "Axios", "Docker", "Azure Pipelines"],
       },
       {
         role: "Software Engineer Manager",
@@ -69,7 +77,7 @@ export const dictionary = {
         url: "https://unifique.com.br/",
         period: "AUG 2024 - FEB 2025",
         description:
-          "Overseeing software development teams, ensuring timely delivery of scalable and innovative solutions. Acting as a bridge between Product (PMs and designers) and Technology teams, facilitating clear communication and alignment on project goals. Leading the design and implementation of technical strategies to enhance application performance and maintainability. Mentoring engineers and fostering a collaborative development culture across cross-functional teams.",
+          "Managed software development teams, ensuring timely delivery of scalable and innovative solutions. Acted as a bridge between Product (PMs and designers) and Technology teams, facilitating clear communication and alignment on project goals. Led the design and implementation of technical strategies to enhance application performance and improve code maintainability. Implemented career development programs for engineers who lacked growth opportunities, resulting in high team satisfaction with management. Reduced support tickets by 80% through improved processes and team empowerment. Mentored engineers and fostered a collaborative development culture across cross-functional teams.",
         technologies: [],
       },
       {
@@ -78,7 +86,7 @@ export const dictionary = {
         url: "https://mercadolivre.com/",
         period: "NOV 2023 - AUG 2024",
         description:
-          "Spearheaded the development of a logistics optimization platform using React and Node.js, reducing operational delivery costs and enhancing efficiency. Maintained and improved internal tools for logistics management, supporting cross-functional team objectives. Collaborated with designers and backend developers to ensure seamless integration and high-quality deliverables.",
+          "Led development of logistics optimization platform at Mercado Livre (Latin America's largest e-commerce) using React and Node.js, reducing operational delivery costs and enhancing efficiency. Maintained and improved internal tools for logistics management, supporting cross-functional team objectives. Collaborated with designers and backend developers to ensure seamless integration and high-quality deliverables.",
         technologies: ["React", "Node.js", "Zustand", "DataDog", "GIT", "Jira", "Figma"],
       },
       {
@@ -87,7 +95,7 @@ export const dictionary = {
         url: "https://www.meliuz.com.br/",
         period: "NOV 2021 - AUG 2023",
         description:
-          "Managed a team of developers, mentoring and guiding them to deliver high-quality solutions. Led mobile development projects using React Native and React, optimizing app performance and integrating advanced analytics tools to track user engagement. Delivered scalable fintech solutions, including a help center module and internal tools, improving customer satisfaction and operational workflows.",
+          "Managed a team of developers at Méliuz (leading Brazilian fintech), mentoring and guiding them to deliver high-quality solutions. Led mobile development projects using React Native and React, optimizing app performance and integrating advanced analytics tools to track user engagement. Delivered scalable fintech solutions, including a help center module and internal tools, improving customer satisfaction and operational workflows.",
         technologies: ["React Native", "React", "Zustand", "DataDog", "GIT", "Jira", "Figma"],
       },
       {
@@ -104,7 +112,7 @@ export const dictionary = {
         url: "https://picpay.com.br/",
         period: "AUG 2020 - OCT 2021",
         description:
-          "Led frontend teams and established best practices, ensuring high-quality deliverables across multiple projects. Designed and maintained a scalable design system using StencilJS, significantly improving development speed and UI consistency. Facilitated team training sessions and authored technical documentation to upskill team members.",
+          "Led frontend teams at PicPay (Brazil's leading fintech) and established best practices, ensuring high-quality deliverables across multiple projects. Designed and maintained a scalable design system using StencilJS, significantly improving development speed and UI consistency. Facilitated team training sessions and authored technical documentation to upskill team members.",
         technologies: ["React", "UI", "Design System", "Content Dev", "Storybook"],
       },
       {
@@ -113,7 +121,7 @@ export const dictionary = {
         url: "https://brq.com.br/",
         period: "AUG 2019 - AUG 2020",
         description:
-          "Developed frontend features for large-scale banking systems using Angular. Collaborated closely with design and backend teams to ensure seamless integration and optimal performance.",
+          "Developed frontend features for large-scale banking systems at BRQ (IT consulting firm providing services to Itaú, Brazil's largest private bank) using Angular. Collaborated closely with design and backend teams to ensure seamless integration and optimal performance.",
         technologies: ["Angular", "GIT", "Jira", "Sketch"],
       },
       {

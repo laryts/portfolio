@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { dictionary } from "@/dictionaries/en";
 import { AnimateOnScroll } from "../animate-on-scroll";
 
@@ -12,6 +13,7 @@ const skills = {
             "React",
             "React Native",
             "Next.js",
+            "Nuxt",
             "Angular",
             "VueJS",
             "Tailwind CSS",
@@ -21,6 +23,7 @@ const skills = {
             "TypeScript",
             "Jest",
             "Styled Components",
+            "SCSS",
         ],
     },
     backend: {
@@ -39,6 +42,8 @@ const skills = {
             "Akita",
             "Vuex",
             "Redux",
+            "Pinia",
+            "Zustand",
         ],
     },
     devOps: {
@@ -50,6 +55,7 @@ const skills = {
             "DataDog",
             "Amplitude",
             "GitHub Actions",
+            "Azure Pipelines",
             "CI/CD pipelines",
         ],
     },
@@ -60,8 +66,9 @@ const skills = {
             "Neon",
             "Supabase",
             "MySQL",
+            "SQL Server",
             "MongoDB",
-        "Drizzle ORM",
+            "Drizzle ORM",
         ],
     },
     others: {
@@ -73,6 +80,10 @@ const skills = {
             "Agile methodologies",
             "Test-driven development (TDD)",
             "Storybook",
+            "SanityCMS",
+            "Wordpress",
+            "Strapi",
+            "Stripe",
             "Photoshop",
             "Illustrator",
             "CorelDraw",

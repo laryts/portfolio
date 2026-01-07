@@ -41,7 +41,7 @@ export default async function Home({
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Larissa Soares",
-    jobTitle: lang === "en" ? "Senior Software Engineer" : "Engenheira de Software Sênior",
+    jobTitle: lang === "en" ? "Senior Front-End Engineer" : "Sênior Frontend Engineer",
     description: dictionary.about.description,
     url: `${siteUrl}/${lang}`,
     image: `${siteUrl}/images/larissa.jpg`,

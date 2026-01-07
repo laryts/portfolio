@@ -257,10 +257,13 @@ function addSecurityHeaders(response: NextResponse): NextResponse {
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
   
   // Content Security Policy (adjust based on your needs)
-  response.headers.set(
-    'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:;"
-  )
+  // Allow connections to self for PostHog reverse proxy (/ingest)
+  // Also allow PostHog assets for remote config (can be restricted in production)
+  const csp = process.env.NODE_ENV === 'development'
+    ? "default-src 'self'; connect-src 'self' https://us.i.posthog.com https://us-assets.i.posthog.com; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://us-assets.i.posthog.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:;"
+    : "default-src 'self'; connect-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:;"
+  
+  response.headers.set('Content-Security-Policy', csp)
 
   return response
 }

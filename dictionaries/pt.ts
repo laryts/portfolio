@@ -11,7 +11,7 @@ export const dictionary = {
   // Hero section
   hero: {
     title: "Larissa Soares",
-    subtitle: "Engenheira de Software Sênior",
+    subtitle: "Sênior Frontend Engineer",
     cta: "Conheça meu trabalho",
     lightMode: "Modo Claro",
     darkMode: "Modo Escuro",
@@ -20,7 +20,7 @@ export const dictionary = {
   about: {
     title: "Sobre Mim",
     description:
-      "Oi, eu sou a Larissa — Engenheira de Software Sênior com 8 anos de experiência transformando ideias em aplicações web escaláveis e centradas no usuário. Especialista em React, me destaco em ambientes colaborativos e adoro construir produtos que geram impacto real. Seja liderando um time ou escrevendo um código limpo e cuidadoso, sou movida por propósito e resultado.",
+      "Oi, eu sou a Larissa — Engenheira Front-End Sênior com mais de 8 anos de experiência no desenvolvimento de aplicações web escaláveis, com forte especialização em Javascript e TypeScript. Atuação em projetos de grande porte, incluindo plataformas educacionais, streaming, PWAs offline-first e sistemas administrativos complexos. Experiência sólida em arquitetura frontend, performance, acessibilidade, CI/CD e integração com autenticação, analytics e microsserviços. Histórico em empresas líderes de tecnologia da América Latina como Mercado Livre (100M+ usuários), Méliuz (15M+ usuários), e PicPay (70M+ usuários), atuando em ambientes ágeis e de alta complexidade técnica.",
     contactButton: "Entre em contato",
     projectsButton: "Ver projetos",
     downloadResume: "Baixar Currículo",
@@ -56,13 +56,21 @@ export const dictionary = {
     viewLess: "Ver menos",
     roles: [
       {
+        role: "Engenheira Front-End Sênior",
+        company: "Cast Group",
+        period: "AGO 2025 – JAN 2025",
+        description:
+          "Liderou o desenvolvimento de duas plataformas educacionais de grande escala para o Sebrae-SP, utilizando Nuxt 3, Vue 3 e TypeScript. Construiu uma plataforma de streaming com área administrativa (Studio), incluindo: CRUD completo de conteúdos (vídeos e metadados), Gestão de usuários e permissões por perfil, Integração com Keycloak (SSO), Dashboards de analytics e monitoramento, Desenvolvimento de PWA offline-first (Sebrae Móvel) permitindo acesso sem conexão à internet, Jogos interativos e jornadas educacionais, Implementação de pipeline CI/CD, padronização de código e boas práticas de frontend. Atuou próxima a designers, produto e backend, garantindo consistência de UX, performance e escalabilidade.",
+        technologies: ["Nuxt 3", "Vue 3", "TypeScript", "Pinia", "TailwindCSS", "SCSS", "PWA", "Service Workers", "IndexedDB", "Axios", "Docker", "Azure Pipelines"],
+      },
+      {
         role: "CTO & Co-fundadora",
         company: "niido",
         url: "https://niido.app/",
         period: "NOV 2024 - Atual",
         description:
-          "Co-fundadora e CTO do niido, liderando a empresa com empatia, propósito e vontade real de fazer a diferença. Aplicando experiência em tecnologia para criar ferramentas que acolhem, facilitam e fazem sentido na vida real. Enxergando na proposta um espaço onde inovação e sensibilidade realmente se encontram, construindo soluções que vão além do código.",
-        technologies: ["React", "React Native", "Next.js", "Node.js", "Tailwind", "Expo", "Zustand", "Supabase", "Postgres", "N8N", "CI/CD", "Sentry", "GIT", "Figma"],
+          "Co-fundou e atuou como CTO do niido, aplicativo mobile focado em experiência do usuário, arquitetura front-end e escalabilidade. Definiu arquitetura técnica e stack utilizando React Native (Expo), Next.js e TypeScript. Implementou fluxos complexos de estado, autenticação e notificações sensíveis a fuso horário suportando múltiplos fusos. Construiu pipelines de observabilidade e analytics para monitoramento de performance e estabilidade. Liderou desenvolvimento frontend hands-on, mantendo padrões de qualidade, testes e boas práticas.",
+        technologies: ["React Native", "Expo", "Next.js", "TypeScript", "TailwindCSS", "Supabase", "Neon", "Postgres", "Drizzle ORM", "Clerk", "Vercel", "PostHog", "Sentry"],
       },
       {
         role: "Gerente de Engenharia de Software",
@@ -70,7 +78,7 @@ export const dictionary = {
         url: "https://unifique.com.br/",
         period: "AGO 2024 - FEV 2025",
         description:
-          "Supervisão de equipes de desenvolvimento de software, garantindo a entrega pontual de soluções escaláveis e inovadoras. Atuando como ponte entre as equipes de Produto (PMs e designers) e Tecnologia, facilitando a comunicação clara e o alinhamento nos objetivos do projeto. Liderando o design e implementação de estratégias técnicas para melhorar o desempenho e a manutenção da aplicação. Mentoria de engenheiros e promoção de uma cultura de desenvolvimento colaborativo entre equipes multifuncionais.",
+          "Gerenciou equipes de desenvolvimento de software, garantindo entrega pontual de soluções escaláveis e inovadoras. Atuou como ponte entre as equipes de Produto (PMs e designers) e Tecnologia, facilitando comunicação clara e alinhamento nos objetivos do projeto. Liderou o design e implementação de estratégias técnicas para melhorar performance da aplicação e aumentar manutenibilidade do código. Implementou programas de desenvolvimento de carreira para engenheiros que careciam de oportunidades de crescimento, resultando em alta satisfação da equipe com a gestão. Reduziu tickets de suporte em 80% através de processos melhorados e empoderamento da equipe. Mentoriou engenheiros e promoveu cultura de desenvolvimento colaborativo entre equipes multifuncionais.",
         technologies: [],
       },
       {
@@ -79,7 +87,7 @@ export const dictionary = {
         url: "https://mercadolivre.com/",
         period: "NOV 2023 - AGO 2024",
         description:
-          "Liderou o desenvolvimento de uma plataforma de otimização logística usando React e Node.js, reduzindo custos operacionais de entrega e aumentando a eficiência. Manteve e melhorou ferramentas internas para gerenciamento logístico, apoiando objetivos de equipes multifuncionais. Colaborou com designers e desenvolvedores backend para garantir integração perfeita e entregas de alta qualidade.",
+          "Liderou o desenvolvimento de plataforma de otimização logística no Mercado Livre (maior e-commerce da América Latina) usando React e Node.js, reduzindo custos operacionais de entrega e aumentando a eficiência. Manteve e melhorou ferramentas internas para gerenciamento logístico, apoiando objetivos de equipes multifuncionais. Colaborou com designers e desenvolvedores backend para garantir integração perfeita e entregas de alta qualidade.",
         technologies: ["React", "Node.js", "Zustand", "DataDog", "GIT", "Jira", "Figma"],
       },
       {
@@ -88,7 +96,7 @@ export const dictionary = {
         url: "https://www.meliuz.com.br/",
         period: "NOV 2021 - AGO 2023",
         description:
-          "Gerenciou uma equipe de desenvolvedores, orientando e guiando-os para entregar soluções de alta qualidade. Liderou projetos de desenvolvimento mobile usando React Native e React, otimizando o desempenho do aplicativo e integrando ferramentas avançadas de análise para acompanhar o engajamento do usuário. Entregou soluções fintech escaláveis, incluindo um módulo de central de ajuda e ferramentas internas, melhorando a satisfação do cliente e os fluxos de trabalho operacionais.",
+          "Gerenciou equipe de desenvolvedores no Méliuz (fintech líder brasileira), orientando e guiando-os para entregar soluções de alta qualidade. Liderou projetos de desenvolvimento mobile usando React Native e React, otimizando desempenho do aplicativo e integrando ferramentas avançadas de análise para acompanhar engajamento do usuário. Entregou soluções fintech escaláveis, incluindo módulo de central de ajuda e ferramentas internas, melhorando satisfação do cliente e fluxos de trabalho operacionais.",
         technologies: ["React Native", "React", "Zustand", "DataDog", "GIT", "Jira", "Figma"],
       },
       {
@@ -105,7 +113,7 @@ export const dictionary = {
         url: "https://picpay.com.br/",
         period: "AGO 2020 - OUT 2021",
         description:
-          "Liderou equipes de frontend e estabeleceu melhores práticas, garantindo entregas de alta qualidade em vários projetos. Projetou e manteve um design system escalável usando StencilJS, melhorando significativamente a velocidade de desenvolvimento e a consistência da UI. Facilitou sessões de treinamento da equipe e elaborou documentação técnica para aprimorar as habilidades dos membros da equipe.",
+          "Liderou equipes de frontend no PicPay (fintech líder brasileira) e estabeleceu melhores práticas, garantindo entregas de alta qualidade em vários projetos. Projetou e manteve design system escalável usando StencilJS, melhorando significativamente velocidade de desenvolvimento e consistência da UI. Facilitou sessões de treinamento da equipe e elaborou documentação técnica para aprimorar habilidades dos membros da equipe.",
         technologies: ["React", "UI", "Design System", "Content Dev", "Storybook"],
       },
       {
@@ -114,7 +122,7 @@ export const dictionary = {
         url: "https://brq.com.br/",
         period: "AGO 2019 - AGO 2020",
         description:
-          "Desenvolveu recursos frontend para sistemas bancários de grande escala usando Angular. Colaborou estreitamente com equipes de design e backend para garantir integração perfeita e desempenho ideal.",
+          "Desenvolveu recursos frontend para sistemas bancários de grande escala na BRQ (consultoria de TI que presta serviços para o Itaú, maior banco privado do Brasil) usando Angular. Colaborou estreitamente com equipes de design e backend para garantir integração perfeita e desempenho ideal.",
         technologies: ["Angular", "GIT", "Jira", "Sketch"],
       },
       {
