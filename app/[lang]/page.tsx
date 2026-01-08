@@ -86,7 +86,7 @@ export default async function Home({
 
         <ExperiencesSection dictionary={dictionary} />
 
-        {/* <BlogSection dictionary={dictionary} lang={lang} /> */}
+        <BlogSection dictionary={dictionary} lang={lang} />
 
         <EducationSection dictionary={dictionary} />
 

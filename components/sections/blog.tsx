@@ -1,4 +1,4 @@
-import { Link } from "lucide-react";
+import Link from "next/link";
 import { AnimateOnScroll } from "../animate-on-scroll";
 import { BlogPostCard } from "../blog-post-card";
 
@@ -20,6 +20,17 @@ export function BlogSection({ dictionary, lang }: BlogSectionProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <AnimateOnScroll animation="slide-up" duration={0.6} delay={0.1}>
               <BlogPostCard
+                title={dictionary.blog.posts.generalista.title}
+                date={dictionary.blog.posts.generalista.date}
+                summary={dictionary.blog.posts.generalista.summary}
+                tags={dictionary.blog.posts.generalista.tags}
+                slug="generalista"
+                readMoreText={dictionary.blog.readMore}
+              />
+            </AnimateOnScroll>
+
+            <AnimateOnScroll animation="slide-up" duration={0.6} delay={0.2}>
+              <BlogPostCard
                 title={dictionary.blog.posts.reactPerformance.title}
                 date={dictionary.blog.posts.reactPerformance.date}
                 summary={dictionary.blog.posts.reactPerformance.summary}
@@ -29,7 +40,7 @@ export function BlogSection({ dictionary, lang }: BlogSectionProps) {
               />
             </AnimateOnScroll>
   
-            <AnimateOnScroll animation="slide-up" duration={0.6} delay={0.2}>
+            <AnimateOnScroll animation="slide-up" duration={0.6} delay={0.3}>
               <BlogPostCard
                 title={dictionary.blog.posts.designSystems.title}
                 date={dictionary.blog.posts.designSystems.date}
@@ -40,7 +51,7 @@ export function BlogSection({ dictionary, lang }: BlogSectionProps) {
               />
             </AnimateOnScroll>
   
-            <AnimateOnScroll animation="slide-up" duration={0.6} delay={0.3}>
+            <AnimateOnScroll animation="slide-up" duration={0.6} delay={0.4}>
               <BlogPostCard
                 title={dictionary.blog.posts.mobileDevTips.title}
                 date={dictionary.blog.posts.mobileDevTips.date}
@@ -52,7 +63,7 @@ export function BlogSection({ dictionary, lang }: BlogSectionProps) {
             </AnimateOnScroll>
           </div>
   
-          <AnimateOnScroll animation="fade" duration={0.6} delay={0.4}>
+          <AnimateOnScroll animation="fade" duration={0.6} delay={0.5}>
             <div className="mt-12 text-center">
               <Link
                 href={`/${lang}/blog`}

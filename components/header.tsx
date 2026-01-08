@@ -21,6 +21,19 @@ export function Header({ lang, dictionary }: HeaderProps) {
   const [mounted, setMounted] = useState(false)
   const pathname = usePathname()
 
+  // Safety check: if dictionary is not available, return null or a minimal header
+  if (!dictionary || !dictionary.nav) {
+    return (
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md shadow-xs">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <Link href="/" className="text-xl font-bold">
+            Larissa Soares
+          </Link>
+        </div>
+      </header>
+    )
+  }
+
   useEffect(() => {
     setMounted(true)
     const handleScroll = () => {

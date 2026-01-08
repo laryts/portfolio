@@ -21,7 +21,6 @@ const BLOCKED_PATHS = [
   '/phpmyadmin',
   '/phpMyAdmin',
   '/pma',
-  '/admin',
   '/administrator',
   // Common exploit paths
   '/.env',
@@ -425,7 +424,7 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   // Match all pathnames except for
-  // - api routes
+  // - api routes (including api/payload for Payload CMS)
   // - _next/static (static files)
   // - _next/image (image optimization files)
   // - favicon.ico (favicon file)

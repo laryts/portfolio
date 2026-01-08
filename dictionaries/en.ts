@@ -163,6 +163,13 @@ export const dictionary = {
           "After years of working with React Native, I've compiled a list of best practices that can help you build more maintainable and performant mobile applications.",
         tags: ["React Native", "Mobile Development", "Best Practices"],
       },
+      generalista: {
+        title: "I'm a Duck (and that's okay!) 🦆",
+        date: "January 15, 2025",
+        summary:
+          "After 10 years of professional experience, I can say: I'm a duck. Or rather, a duck. Discover how being a generalist became my differentiator in my tech career.",
+        tags: ["Career", "Development", "Generalist", "Full Cycle"],
+      },
     },
   },
   // Contact section

@@ -164,6 +164,13 @@ export const dictionary = {
           "Após anos trabalhando com React Native, compilei uma lista de melhores práticas que podem ajudar você a construir aplicações móveis mais sustentáveis e performáticas.",
         tags: ["React Native", "Desenvolvimento Mobile", "Melhores Práticas"],
       },
+      generalista: {
+        title: "Sou um Pato (e está tudo bem!) 🦆",
+        date: "15 de Janeiro de 2025",
+        summary:
+          "Depois de 10 anos de experiência profissional, posso afirmar: sou um pato. Ou melhor, uma pata. Descubra como ser generalista se tornou meu diferencial na carreira de tecnologia.",
+        tags: ["Carreira", "Desenvolvimento", "Generalista", "Full Cycle"],
+      },
     },
   },
   // Contact section

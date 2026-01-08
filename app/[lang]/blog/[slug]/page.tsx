@@ -6,6 +6,12 @@ import Link from "next/link"
 import { Calendar, ArrowLeft } from "lucide-react"
 import { SocialShareButtons } from "@/components/social-share-buttons"
 import { ErrorBoundary } from "@/components/error-boundary"
+import dynamic from "next/dynamic"
+
+const GeneralistaContent = dynamic(
+  () => import("@/lib/blog-content/pt/generalista").then((mod) => mod.GeneralistaContent),
+  { ssr: true }
+)
 
 export async function generateMetadata({
   params,
@@ -166,6 +172,10 @@ const BlogContent = ({ lang, slug }: { lang: Locale; slug: string }) => {
       )
     }
 
+    if (slug === "generalista") {
+      return <GeneralistaContent />
+    }
+
     // Add other Portuguese content as needed
   }
 
@@ -182,6 +192,7 @@ const BlogContent = ({ lang, slug }: { lang: Locale; slug: string }) => {
 export default async function BlogPost({ params }: { params: Promise<{ lang: Locale; slug: string }> }) {
   const { lang, slug } = await params
   const dictionary = await getDictionary(lang)
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://larissasoares.dev"
 
   // Get the blog post data based on the slug
   const postKey = Object.keys(dictionary.blog.posts).find((key) => key === slug)
