@@ -8,8 +8,13 @@ import { SocialShareButtons } from "@/components/social-share-buttons"
 import { ErrorBoundary } from "@/components/error-boundary"
 import dynamic from "next/dynamic"
 
-const GeneralistaContent = dynamic(
+const GeneralistaContentPT = dynamic(
   () => import("@/lib/blog-content/pt/generalista").then((mod) => mod.GeneralistaContent),
+  { ssr: true }
+)
+
+const GeneralistaContentEN = dynamic(
+  () => import("@/lib/blog-content/en/generalista").then((mod) => mod.GeneralistaContent),
   { ssr: true }
 )
 
@@ -143,6 +148,10 @@ const BlogContent = ({ lang, slug }: { lang: Locale; slug: string }) => {
         </div>
       )
     }
+
+    if (slug === "generalista") {
+      return <GeneralistaContentEN />
+    }
   }
 
   // For Portuguese content
@@ -173,7 +182,7 @@ const BlogContent = ({ lang, slug }: { lang: Locale; slug: string }) => {
     }
 
     if (slug === "generalista") {
-      return <GeneralistaContent />
+      return <GeneralistaContentPT />
     }
 
     // Add other Portuguese content as needed

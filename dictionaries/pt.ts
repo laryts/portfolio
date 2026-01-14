@@ -143,27 +143,6 @@ export const dictionary = {
     readMore: "Ler mais",
     viewAll: "Ver todos os artigos",
     posts: {
-      reactPerformance: {
-        title: "Otimizando Performance em React: Uma Análise Profunda",
-        date: "15 de Março de 2024",
-        summary:
-          "A otimização de performance é crucial para oferecer uma experiência de usuário fluida em aplicações React. Neste artigo, exploro técnicas avançadas para identificar e resolver gargalos de performance.",
-        tags: ["React", "Performance", "Otimização"],
-      },
-      designSystems: {
-        title: "Construindo Design Systems Escaláveis com StencilJS",
-        date: "2 de Fevereiro de 2024",
-        summary:
-          "Design systems são essenciais para manter consistência em aplicações de grande porte. Aprenda como utilizar StencilJS para criar componentes web reutilizáveis que funcionam em qualquer framework.",
-        tags: ["Design Systems", "StencilJS", "Web Components"],
-      },
-      mobileDevTips: {
-        title: "Melhores Práticas em React Native em 2024",
-        date: "10 de Janeiro de 2024",
-        summary:
-          "Após anos trabalhando com React Native, compilei uma lista de melhores práticas que podem ajudar você a construir aplicações móveis mais sustentáveis e performáticas.",
-        tags: ["React Native", "Desenvolvimento Mobile", "Melhores Práticas"],
-      },
       generalista: {
         title: "Sou um Pato (e está tudo bem!) 🦆",
         date: "15 de Janeiro de 2025",
