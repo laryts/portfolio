@@ -142,27 +142,6 @@ export const dictionary = {
     readMore: "Read more",
     viewAll: "View all articles",
     posts: {
-      reactPerformance: {
-        title: "Optimizing React Performance: A Deep Dive",
-        date: "March 15, 2024",
-        summary:
-          "Performance optimization is crucial for delivering a smooth user experience in React applications. In this article, I explore advanced techniques for identifying and resolving performance bottlenecks.",
-        tags: ["React", "Performance", "Optimization"],
-      },
-      designSystems: {
-        title: "Building Scalable Design Systems with StencilJS",
-        date: "February 2, 2024",
-        summary:
-          "Design systems are essential for maintaining consistency across large applications. Learn how to leverage StencilJS to create reusable web components that work across any framework.",
-        tags: ["Design Systems", "StencilJS", "Web Components"],
-      },
-      mobileDevTips: {
-        title: "React Native Best Practices in 2024",
-        date: "January 10, 2024",
-        summary:
-          "After years of working with React Native, I've compiled a list of best practices that can help you build more maintainable and performant mobile applications.",
-        tags: ["React Native", "Mobile Development", "Best Practices"],
-      },
       generalista: {
         title: "I'm a Duck (and that's okay!) 🦆",
         date: "January 15, 2025",

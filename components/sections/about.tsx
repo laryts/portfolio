@@ -1,5 +1,6 @@
 import { AnimateOnScroll } from "../animate-on-scroll";
 import Image from "next/image";
+import { RESUME_PDF } from "@/lib/resume";
 type AboutSectionProps = {
   dictionary: any
 }
@@ -39,8 +40,8 @@ export function AboutSection({ dictionary }: AboutSectionProps) {
                 {dictionary.about.projectsButton}
               </a>
               <a
-                href="/resume-larissa-soares.pdf"
-                download
+                href={RESUME_PDF.href}
+                download={RESUME_PDF.downloadName}
                 className="px-6 py-2 rounded-full bg-deep-purple-900 text-white hover:bg-deep-purple-800 transition-colors duration-300 flex items-center"
               >
                 <svg

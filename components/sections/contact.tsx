@@ -4,6 +4,7 @@ import posthog from 'posthog-js';
 import { AnimateOnScroll } from "../animate-on-scroll";
 import { ContactLink } from "../contact-link";
 import { sendEmail } from "@/lib/mail";
+import { RESUME_PDF } from "@/lib/resume";
 import { useState } from "react";
 
 type ContactSectionProps = {
@@ -91,9 +92,13 @@ export function ContactSection({ dictionary }: ContactSectionProps) {
                     </div>
                     <div className="mt-6">
                         <a
-                            href="/resume-larissa-soares.pdf"
-                            download
-                            onClick={() => posthog.capture('resume-downloaded', { file_path: '/resume-larissa-soares.pdf' })}
+                            href={RESUME_PDF.href}
+                            download={RESUME_PDF.downloadName}
+                            onClick={() =>
+                                posthog.capture('resume-downloaded', {
+                                    file_path: RESUME_PDF.href,
+                                })
+                            }
                             className="inline-flex items-center px-6 py-3 rounded-lg bg-deep-purple-900 text-white font-medium hover:bg-deep-purple-800 transition-colors duration-300"
                         >
                             <svg
