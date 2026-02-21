@@ -12,9 +12,12 @@ interface BlogPostCardProps {
   tags: string[]
   slug: string
   readMoreText: string
+  /** When provided, link is /${lang}/blog/${slug} */
+  lang?: string
 }
 
-export function BlogPostCard({ title, date, summary, tags, slug, readMoreText }: BlogPostCardProps) {
+export function BlogPostCard({ title, date, summary, tags, slug, readMoreText, lang }: BlogPostCardProps) {
+  const href = lang ? `/${lang}/blog/${slug}` : `/blog/${slug}`
   return (
     <motion.div
       className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
@@ -43,7 +46,7 @@ export function BlogPostCard({ title, date, summary, tags, slug, readMoreText }:
         </div>
 
         <Link
-          href={`/blog/${slug}`}
+          href={href}
           className="inline-flex items-center text-deep-purple-900 dark:text-deep-purple-400 hover:text-deep-purple-800 dark:hover:text-deep-purple-300 transition-colors"
           onClick={() => posthog.capture('blog_post_card_read_more_clicked', { slug, title, tags })}
         >

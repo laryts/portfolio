@@ -135,21 +135,12 @@ export const dictionary = {
       },
     ],
   },
-  // Blog section
+  // Blog section (content comes from Sanity; only UI strings here)
   blog: {
     title: "Technical Blog",
     subtitle: "Sharing insights and experiences from my journey in software development",
     readMore: "Read more",
     viewAll: "View all articles",
-    posts: {
-      generalista: {
-        title: "I'm a Duck (and that's okay!) 🦆",
-        date: "January 15, 2025",
-        summary:
-          "After 10 years of professional experience, I can say: I'm a duck. Or rather, a duck. Discover how being a generalist became my differentiator in my tech career.",
-        tags: ["Career", "Development", "Generalist", "Full Cycle"],
-      },
-    },
   },
   // Contact section
   contact: {

@@ -136,21 +136,12 @@ export const dictionary = {
       },
     ],
   },
-  // Blog section
+  // Blog section (content comes from Sanity; only UI strings here)
   blog: {
     title: "Blog Técnico",
     subtitle: "Compartilhando insights e experiências da minha jornada no desenvolvimento de software",
     readMore: "Ler mais",
     viewAll: "Ver todos os artigos",
-    posts: {
-      generalista: {
-        title: "Sou um Pato (e está tudo bem!) 🦆",
-        date: "15 de Janeiro de 2025",
-        summary:
-          "Depois de 10 anos de experiência profissional, posso afirmar: sou um pato. Ou melhor, uma pata. Descubra como ser generalista se tornou meu diferencial na carreira de tecnologia.",
-        tags: ["Carreira", "Desenvolvimento", "Generalista", "Full Cycle"],
-      },
-    },
   },
   // Contact section
   contact: {

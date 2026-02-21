@@ -1,78 +1,70 @@
-import Link from "next/link";
-import { AnimateOnScroll } from "../animate-on-scroll";
-import { BlogPostCard } from "../blog-post-card";
+import Link from 'next/link'
+import { AnimateOnScroll } from '../animate-on-scroll'
+import { BlogPostCard } from '../blog-post-card'
+import type { BlogPostListItem } from '@/lib/sanity/types'
 
 type BlogSectionProps = {
-    dictionary: any
-    lang: string
+  dictionary: {
+    blog: {
+      title: string
+      subtitle: string
+      readMore: string
+      viewAll: string
+    }
+  }
+  lang: string
+  posts: BlogPostListItem[]
 }
 
-export function BlogSection({ dictionary, lang }: BlogSectionProps) {
-    return (
-        <section id="blog" className="py-20 px-4 md:px-8 max-w-6xl mx-auto">
-          <AnimateOnScroll animation="fade" duration={0.8}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">{dictionary.blog.title}</h2>
-            <p className="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-3xl mx-auto">
-              {dictionary.blog.subtitle}
-            </p>
-          </AnimateOnScroll>
-  
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <AnimateOnScroll animation="slide-up" duration={0.6} delay={0.1}>
-              <BlogPostCard
-                title={dictionary.blog.posts.generalista.title}
-                date={dictionary.blog.posts.generalista.date}
-                summary={dictionary.blog.posts.generalista.summary}
-                tags={dictionary.blog.posts.generalista.tags}
-                slug="generalista"
-                readMoreText={dictionary.blog.readMore}
-              />
-            </AnimateOnScroll>
+export function BlogSection({ dictionary, lang, posts }: BlogSectionProps) {
+  return (
+    <section id="blog" className="py-20 px-4 md:px-8 max-w-6xl mx-auto">
+      <AnimateOnScroll animation="fade" duration={0.8}>
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">{dictionary.blog.title}</h2>
+        <p className="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-3xl mx-auto">
+          {dictionary.blog.subtitle}
+        </p>
+      </AnimateOnScroll>
 
-            <AnimateOnScroll animation="slide-up" duration={0.6} delay={0.2}>
-              <BlogPostCard
-                title={dictionary.blog.posts.reactPerformance.title}
-                date={dictionary.blog.posts.reactPerformance.date}
-                summary={dictionary.blog.posts.reactPerformance.summary}
-                tags={dictionary.blog.posts.reactPerformance.tags}
-                slug="reactPerformance"
-                readMoreText={dictionary.blog.readMore}
-              />
-            </AnimateOnScroll>
-  
-            <AnimateOnScroll animation="slide-up" duration={0.6} delay={0.3}>
-              <BlogPostCard
-                title={dictionary.blog.posts.designSystems.title}
-                date={dictionary.blog.posts.designSystems.date}
-                summary={dictionary.blog.posts.designSystems.summary}
-                tags={dictionary.blog.posts.designSystems.tags}
-                slug="designSystems"
-                readMoreText={dictionary.blog.readMore}
-              />
-            </AnimateOnScroll>
-  
-            <AnimateOnScroll animation="slide-up" duration={0.6} delay={0.4}>
-              <BlogPostCard
-                title={dictionary.blog.posts.mobileDevTips.title}
-                date={dictionary.blog.posts.mobileDevTips.date}
-                summary={dictionary.blog.posts.mobileDevTips.summary}
-                tags={dictionary.blog.posts.mobileDevTips.tags}
-                slug="mobileDevTips"
-                readMoreText={dictionary.blog.readMore}
-              />
-            </AnimateOnScroll>
-          </div>
-  
-          <AnimateOnScroll animation="fade" duration={0.6} delay={0.5}>
-            <div className="mt-12 text-center">
-              <Link
-                href={`/${lang}/blog`}
-                className="inline-flex items-center px-6 py-3 rounded-lg bg-deep-purple-900 text-white font-medium hover:bg-deep-purple-800 transition-colors duration-300"
-              >
-                {dictionary.blog.viewAll}
-              </Link>
-            </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {posts.map((post, index) => (
+          <AnimateOnScroll key={post.slug} animation="slide-up" duration={0.6} delay={0.1 * (index + 1)}>
+            <BlogPostCard
+              title={post.title}
+              date={post.publishedAt ? formatPostDate(post.publishedAt, lang) : ''}
+              summary={post.summary}
+              tags={post.tags}
+              slug={post.slug}
+              readMoreText={dictionary.blog.readMore}
+              lang={lang}
+            />
           </AnimateOnScroll>
-        </section>
-    )
+        ))}
+      </div>
+
+      <AnimateOnScroll animation="fade" duration={0.6} delay={0.5}>
+        <div className="mt-12 text-center">
+          <Link
+            href={`/${lang}/blog`}
+            className="inline-flex items-center px-6 py-3 rounded-lg bg-deep-purple-900 text-white font-medium hover:bg-deep-purple-800 transition-colors duration-300"
+          >
+            {dictionary.blog.viewAll}
+          </Link>
+        </div>
+      </AnimateOnScroll>
+    </section>
+  )
+}
+
+function formatPostDate(isoDate: string, lang: string): string {
+  try {
+    const date = new Date(isoDate)
+    return date.toLocaleDateString(lang === 'pt' ? 'pt-BR' : 'en-US', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    })
+  } catch {
+    return isoDate
+  }
 }

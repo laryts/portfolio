@@ -1,9 +1,14 @@
-import Link from "next/link"
-import { getDictionary } from "@/dictionaries"
-import type { Locale } from "@/types/i18n"
-import type { Metadata } from "next"
-import { BlogPostCard } from "@/components/blog-post-card"
-import { ArrowLeft } from "lucide-react"
+import Link from 'next/link'
+import { getDictionary } from '@/dictionaries'
+import type { Locale } from '@/types/i18n'
+import type { Metadata } from 'next'
+import { BlogPostCard } from '@/components/blog-post-card'
+import { ArrowLeft } from 'lucide-react'
+import { getBlogPosts } from '@/lib/sanity/blog'
+import { format } from 'date-fns'
+import { ptBR, enUS } from 'date-fns/locale'
+
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({
   params,
@@ -11,16 +16,13 @@ export async function generateMetadata({
   params: Promise<{ lang: Locale }>
 }): Promise<Metadata> {
   const { lang } = await params
-  const dictionary = await getDictionary(lang)
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://larissasoares.dev"
-  
-  const isEnglish = lang === "en"
-  const title = isEnglish 
-    ? "Blog | Larissa Soares"
-    : "Blog | Larissa Soares"
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://larissasoares.dev'
+
+  const isEnglish = lang === 'en'
+  const title = isEnglish ? 'Blog | Larissa Soares' : 'Blog | Larissa Soares'
   const description = isEnglish
-    ? "Read articles about React, Next.js, React Native, and web development from Larissa Soares, a Senior Software Engineer."
-    : "Leia artigos sobre React, Next.js, React Native e desenvolvimento web de Larissa Soares, Engenheira de Software Sênior."
+    ? 'Read articles about React, Next.js, React Native, and web development from Larissa Soares, a Senior Software Engineer.'
+    : 'Leia artigos sobre React, Next.js, React Native e desenvolvimento web de Larissa Soares, Engenheira de Software Sênior.'
 
   return {
     title,
@@ -29,10 +31,10 @@ export async function generateMetadata({
       title,
       description,
       url: `${siteUrl}/${lang}/blog`,
-      type: "website",
+      type: 'website',
     },
     twitter: {
-      card: "summary_large_image",
+      card: 'summary_large_image',
       title,
       description,
     },
@@ -46,15 +48,16 @@ export async function generateMetadata({
   }
 }
 
+function formatPostDate(isoDate: string | null, lang: Locale): string {
+  if (!isoDate) return ''
+  const date = new Date(isoDate)
+  return format(date, 'd MMMM yyyy', { locale: lang === 'pt' ? ptBR : enUS })
+}
+
 export default async function BlogIndex({ params }: { params: Promise<{ lang: Locale }> }) {
   const { lang } = await params
   const dictionary = await getDictionary(lang)
-
-  // Get all blog posts
-  const blogPosts = Object.entries(dictionary.blog.posts).map(([slug, post]) => ({
-    slug,
-    ...post,
-  }))
+  const blogPosts = await getBlogPosts(lang)
 
   return (
     <div className="min-h-screen bg-white dark:bg-dark-purple-950 text-gray-800 dark:text-gray-200 transition-colors duration-300">
@@ -70,15 +73,16 @@ export default async function BlogIndex({ params }: { params: Promise<{ lang: Lo
         <p className="text-gray-600 dark:text-gray-400 mb-12 max-w-3xl">{dictionary.blog.subtitle}</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogPosts.map((post: any, index: number) => (
+          {blogPosts.map((post) => (
             <BlogPostCard
               key={post.slug}
               title={post.title}
-              date={post.date}
+              date={formatPostDate(post.publishedAt, lang)}
               summary={post.summary}
               tags={post.tags}
               slug={post.slug}
               readMoreText={dictionary.blog.readMore}
+              lang={lang}
             />
           ))}
         </div>

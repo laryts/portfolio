@@ -1,19 +1,22 @@
-import { getDictionary } from "@/dictionaries"
-import type { Locale } from "@/types/i18n"
-import { normalizeUrl } from "@/lib/utils"
-import { locales } from "@/proxy"
-import { notFound } from "next/navigation"
-import { 
-  PersonalSection, 
-  HeroSection, 
-  AboutSection, 
-  ProjectsSection, 
-  SkillsSection, 
+import { getDictionary } from '@/dictionaries'
+import type { Locale } from '@/types/i18n'
+import { normalizeUrl } from '@/lib/utils'
+import { locales } from '@/proxy'
+import { notFound } from 'next/navigation'
+import {
+  PersonalSection,
+  HeroSection,
+  AboutSection,
+  ProjectsSection,
+  SkillsSection,
   ExperiencesSection,
   BlogSection,
   EducationSection,
-  ContactSection
-} from "@/components/sections"
+  ContactSection,
+} from '@/components/sections'
+import { getFeaturedBlogPosts, getBlogPosts } from '@/lib/sanity/blog'
+
+export const dynamic = 'force-dynamic'
 
 export default async function Home({
   params,
@@ -28,12 +31,16 @@ export default async function Home({
   }
   
   const dictionary = await getDictionary(lang)
-  
+
   // Validate dictionary is loaded
   if (!dictionary || !dictionary.about) {
     throw new Error(`Dictionary not loaded properly for locale: ${lang}`)
   }
-  
+
+  const featuredPosts = await getFeaturedBlogPosts(lang, 3)
+  const blogPostsForSection =
+    featuredPosts.length > 0 ? featuredPosts : (await getBlogPosts(lang)).slice(0, 3)
+
   const siteUrl = normalizeUrl(process.env.NEXT_PUBLIC_SITE_URL)
 
   // Structured data for Person/Profile
@@ -86,7 +93,7 @@ export default async function Home({
 
         <ExperiencesSection dictionary={dictionary} />
 
-        <BlogSection dictionary={dictionary} lang={lang} />
+        <BlogSection dictionary={dictionary} lang={lang} posts={blogPostsForSection} />
 
         <EducationSection dictionary={dictionary} />
 

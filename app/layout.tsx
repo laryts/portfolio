@@ -1,10 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
 import "./globals.css"
 import { normalizeUrl } from "@/lib/utils"
-
-const inter = Inter({ subsets: ["latin"] })
 
 const siteUrl = normalizeUrl(process.env.NEXT_PUBLIC_SITE_URL)
 
@@ -30,5 +27,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  return children
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body className="antialiased">{children}</body>
+    </html>
+  )
 }

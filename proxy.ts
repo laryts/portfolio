@@ -374,8 +374,26 @@ export function proxy(request: NextRequest) {
       }
     }
 
+    // ===== STUDIO SUBDOMAIN =====
+    // When accessed via studio.larissasoares.dev, rewrite to /studio so the same app serves the Studio at the root
+    const host = request.nextUrl.hostname
+    if (host === 'studio.larissasoares.dev') {
+      const studioPath = pathname === '/' ? '/studio' : `/studio${pathname}`
+      const url = request.nextUrl.clone()
+      url.pathname = studioPath
+      const response = NextResponse.rewrite(url)
+      return addSecurityHeaders(response)
+    }
+
     // ===== LOCALE HANDLING =====
     
+    // Paths that must not get a locale prefix (e.g. Sanity Studio at /studio)
+    const pathWithoutLocale = pathname.startsWith('/studio') || pathname.startsWith('/studio/')
+    if (pathWithoutLocale) {
+      const response = NextResponse.next()
+      return addSecurityHeaders(response)
+    }
+
     // Check if the pathname already includes a locale
     const pathnameHasLocale = locales.some((locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`)
 
@@ -430,6 +448,7 @@ export const config = {
   // - favicon.ico (favicon file)
   // - public files (e.g. robots.txt)
   // - ingest routes (PostHog - handled by rewrites)
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|images|ingest|.*\\.svg).*)"],
+  // - studio (Sanity Studio; must not get locale prefix)
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|images|ingest|studio|.*\\.svg).*)"],
 }
 
