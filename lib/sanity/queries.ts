@@ -1,4 +1,4 @@
-export const blogPostsByLangQuery = `*[_type == "post" && language == $lang] | order(publishedAt desc) {
+export const blogPostsByLangQuery = `*[_type == "post" && language == $lang] | order(coalesce(publishedAt, _createdAt) desc) {
   _id,
   title,
   "slug": slug.current,
@@ -6,6 +6,7 @@ export const blogPostsByLangQuery = `*[_type == "post" && language == $lang] | o
   tags,
   language,
   publishedAt,
+  _createdAt,
   featured,
   mainImage
 }`
@@ -23,7 +24,7 @@ export const blogPostBySlugQuery = `*[_type == "post" && slug.current == $slug &
   featured
 }`
 
-export const featuredBlogPostsQuery = `*[_type == "post" && language == $lang && featured == true] | order(publishedAt desc) [0...$limit] {
+export const featuredBlogPostsQuery = `*[_type == "post" && language == $lang && featured == true] | order(coalesce(publishedAt, _createdAt) desc) [0...$limit] {
   _id,
   title,
   "slug": slug.current,
@@ -31,6 +32,7 @@ export const featuredBlogPostsQuery = `*[_type == "post" && language == $lang &&
   tags,
   language,
   publishedAt,
+  _createdAt,
   featured,
   mainImage
 }`

@@ -138,8 +138,8 @@ export const dictionary = {
   },
   // Blog section (content comes from Sanity; only UI strings here)
   blog: {
-    title: "Blog Técnico",
-    subtitle: "Compartilhando insights e experiências da minha jornada no desenvolvimento de software",
+    title: "Blog",
+    subtitle: "Aprendendo em público — reflexões sobre tech, código, carreira e tudo o que vem no meio do caminho.",
     readMore: "Ler mais",
     viewAll: "Ver todos os artigos",
   },

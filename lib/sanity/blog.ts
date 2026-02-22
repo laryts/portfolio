@@ -1,11 +1,11 @@
-import { client } from '@/sanity/client'
+import { client, urlFor } from '@/sanity/client'
 import {
   blogPostsByLangQuery,
   blogPostBySlugQuery,
   featuredBlogPostsQuery,
   blogSlugsByLangQuery,
 } from '@/lib/sanity/queries'
-import type { SanityBlogPost, BlogPostListItem } from '@/lib/sanity/types'
+import type { SanityBlogPost, BlogPostListItem, SanityImageAsset } from '@/lib/sanity/types'
 
 function mapPostToListItem(post: {
   _id: string
@@ -15,8 +15,9 @@ function mapPostToListItem(post: {
   tags: string[]
   language: string
   publishedAt: string | null
+  _createdAt?: string | null
   featured?: boolean
-  mainImage?: unknown
+  mainImage?: SanityImageAsset | null
 }): BlogPostListItem {
   return {
     title: post.title,
@@ -26,6 +27,11 @@ function mapPostToListItem(post: {
     language: post.language as 'pt' | 'en',
     publishedAt: post.publishedAt ?? null,
     featured: post.featured ?? false,
+    createdAt: post._createdAt ?? null,
+    imageUrl:
+      post.mainImage != null
+        ? urlFor(post.mainImage).width(600).height(340).fit('max').url()
+        : null,
   }
 }
 

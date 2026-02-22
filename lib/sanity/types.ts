@@ -48,4 +48,8 @@ export interface SanityBlogPost {
 export interface BlogPostListItem
   extends Pick<SanityBlogPost, 'title' | 'summary' | 'tags' | 'language' | 'publishedAt' | 'featured'> {
   slug: string
+  /** URL da imagem principal para thumbnail (gerada no servidor com urlFor) */
+  imageUrl: string | null
+  /** Data de criação no Sanity (fallback quando publishedAt é nulo) */
+  createdAt: string | null
 }

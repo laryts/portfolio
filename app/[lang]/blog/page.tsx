@@ -77,12 +77,13 @@ export default async function BlogIndex({ params }: { params: Promise<{ lang: Lo
             <BlogPostCard
               key={post.slug}
               title={post.title}
-              date={formatPostDate(post.publishedAt, lang)}
+              date={formatPostDate(post.publishedAt ?? post.createdAt ?? '', lang)}
               summary={post.summary}
               tags={post.tags}
               slug={post.slug}
               readMoreText={dictionary.blog.readMore}
               lang={lang}
+              imageUrl={post.imageUrl}
             />
           ))}
         </div>

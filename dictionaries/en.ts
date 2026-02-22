@@ -138,7 +138,7 @@ export const dictionary = {
   // Blog section (content comes from Sanity; only UI strings here)
   blog: {
     title: "Technical Blog",
-    subtitle: "Sharing insights and experiences from my journey in software development",
+    subtitle: "Learning in public — reflections on tech, code, career, and everything in between.",
     readMore: "Read more",
     viewAll: "View all articles",
   },

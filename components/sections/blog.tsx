@@ -28,15 +28,16 @@ export function BlogSection({ dictionary, lang, posts }: BlogSectionProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {posts.map((post, index) => (
-          <AnimateOnScroll key={post.slug} animation="slide-up" duration={0.6} delay={0.1 * (index + 1)}>
+          <AnimateOnScroll key={post.slug} animation="slide-up" duration={0.6} delay={0.1 * (index + 1)} className="h-full">
             <BlogPostCard
               title={post.title}
-              date={post.publishedAt ? formatPostDate(post.publishedAt, lang) : ''}
+              date={post.publishedAt || post.createdAt ? formatPostDate(post.publishedAt ?? post.createdAt ?? '', lang) : ''}
               summary={post.summary}
               tags={post.tags}
               slug={post.slug}
               readMoreText={dictionary.blog.readMore}
               lang={lang}
+              imageUrl={post.imageUrl}
             />
           </AnimateOnScroll>
         ))}
