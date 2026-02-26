@@ -87,13 +87,13 @@ export default async function Home({
 
         <PersonalSection dictionary={dictionary} />
 
-        {/* <ProjectsSection dictionary={dictionary} /> */}
-
         <SkillsSection dictionary={dictionary} />
 
         <ExperiencesSection dictionary={dictionary} />
 
         <BlogSection dictionary={dictionary} lang={lang} posts={blogPostsForSection} />
+        
+        <ProjectsSection dictionary={dictionary} />
 
         <EducationSection dictionary={dictionary} />
 

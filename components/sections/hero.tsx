@@ -28,7 +28,7 @@ export function HeroSection({ dictionary }: HeroSectionProps) {
         <div className="spotlight"></div>
       </AnimateOnScroll>
 
-      <div className="name-container mt-32">
+      <div className="name-container">
         <AnimateOnScroll animation="fade" duration={0.8} className="relative z-10">
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight name-glow">{dictionary.hero.title}</h1>
         </AnimateOnScroll>

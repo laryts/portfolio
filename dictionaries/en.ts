@@ -20,7 +20,7 @@ export const dictionary = {
   about: {
     title: "About Me",
     description:
-      "Hi, I'm Larissa — a Senior Front-End Engineer with over 8 years of experience developing scalable web applications, with strong specialization in JavaScript and TypeScript. Worked on large-scale projects, including educational platforms, streaming, offline-first PWAs and complex administrative systems. Solid experience in frontend architecture, performance, accessibility, CI/CD and integration with authentication, analytics and microservices. Background at leading Latin American tech companies like Mercado Livre (100M+ users), Méliuz (15M+ users), and PicPay (70M+ users), working in agile environments and high technical complexity.",
+      "Hi, I'm Larissa — a Senior Front-End Engineer with over 9 years of experience developing scalable web applications, with strong specialization in JavaScript and TypeScript. Worked on large-scale projects, including educational platforms, streaming, offline-first PWAs and complex administrative systems. Solid experience in frontend architecture, performance, accessibility, CI/CD and integration with authentication, analytics and microservices. Background at leading Latin American tech companies like Mercado Livre (100M+ users), Méliuz (15M+ users), and PicPay (70M+ users), working in agile environments and high technical complexity.",
     contactButton: "Contact me",
     projectsButton: "View projects",
     downloadResume: "Download Resume",
@@ -29,11 +29,33 @@ export const dictionary = {
   projects: {
     title: "Projects",
     viewProject: "View project",
-    projectDescriptions: {
-      IPICMobile: "Mobile application developed in Ionic with backend by PHP (Final Paper Project).",
-      MGNGWebsite: "Law firm website UI designed in Figma and developed using Laravel (PHP), MySQL, and VueJS.",
-      FreelancePhotographer: "Photographer website developed using NextJS, Vercel, Strapi, and Stripe.",
-    },
+    items: [
+      {
+        name: "ICAN Model Management",
+        description: "Institutional website for the ICAN Model Management modeling agency.",
+        url: "https://www.icanmodelmanagement.com/en/home",
+        imageUrl: "/images/icanmodel.png",
+        year: "2018",
+      },
+      {
+        name: "Sebrae Streaming",
+        description: "Educational streaming platform for Sebrae-SP with internal content admin tool and custom CMS I built, plus educational journeys.",
+        url: "https://app-streaming.sebraesp.com.br/",
+        imageUrl: "/images/streaming-sebrae.png",
+        year: "2025",
+      },
+      {
+        name: "niido",
+        description: "App for couples seeking more connection, with emotional check-ins, shared lists and connection map. Designed for neurodivergent couples.",
+        url: "https://niido.app/",
+        imageUrl: "/images/niido.png",
+        year: "2025",
+        links: [
+          { label: "App Store", url: "https://apps.apple.com/br/app/niido/id6742075036" },
+          { label: "Google Play", url: "https://play.google.com/store/apps/details?id=app.niido&pcampaignid=web_share" },
+        ],
+      },
+    ],
   },
   // Skills section
   skills: {

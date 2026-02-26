@@ -18,7 +18,9 @@ type BlogSectionProps = {
 
 export function BlogSection({ dictionary, lang, posts }: BlogSectionProps) {
   return (
-    <section id="blog" className="py-20 px-4 md:px-8 max-w-6xl mx-auto">
+    <section id="blog" className="py-20 px-4 md:px-8 bg-gray-100 dark:bg-dark-purple-900 transition-colors duration-300">
+      <div className="max-w-6xl mx-auto">
+
       <AnimateOnScroll animation="fade" duration={0.8}>
         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">{dictionary.blog.title}</h2>
         <p className="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-3xl mx-auto">
@@ -53,6 +55,7 @@ export function BlogSection({ dictionary, lang, posts }: BlogSectionProps) {
           </Link>
         </div>
       </AnimateOnScroll>
+      </div>
     </section>
   )
 }

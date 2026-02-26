@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: "%s | Larissa Soares",
   },
   description:
-    "Portfolio of Larissa Soares, a Senior Software Engineer with 8 years of experience in React, Next.js, and React Native. Specializing in building scalable, user-focused web applications.",
+    "Portfolio of Larissa Soares, a Senior Software Engineer with 9 years of experience in React, Next.js, and React Native. Specializing in building scalable, user-focused web applications.",
   keywords: ["Larissa Soares", "Software Engineer", "React", "Next.js", "React Native", "Frontend Developer", "Web Development", "Portfolio"],
   authors: [{ name: "Larissa Soares" }],
   creator: "Larissa Soares",
@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body className="antialiased">{children}</body>
     </html>
   )

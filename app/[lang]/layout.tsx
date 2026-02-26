@@ -23,8 +23,8 @@ export async function generateMetadata({
     ? "Larissa Soares | Senior Software Engineer"
     : "Larissa Soares | Engenheira de Software Sênior"
   const description = isEnglish
-    ? "Portfolio of Larissa Soares, a Senior Software Engineer with 8 years of experience in React, Next.js, and React Native. Specializing in building scalable, user-focused web applications."
-    : "Portfólio de Larissa Soares, Engenheira de Software Sênior com 8 anos de experiência em React, Next.js e React Native. Especialista em construir aplicações web escaláveis e centradas no usuário."
+    ? "Portfolio of Larissa Soares, a Senior Software Engineer with 9 years of experience in React, Next.js, and React Native. Specializing in building scalable, user-focused web applications."
+    : "Portfólio de Larissa Soares, Engenheira de Software Sênior com 9 anos de experiência em React, Next.js e React Native. Especialista em construir aplicações web escaláveis e centradas no usuário."
 
   return {
     metadataBase: new URL(siteUrl),

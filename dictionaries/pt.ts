@@ -20,7 +20,7 @@ export const dictionary = {
   about: {
     title: "Sobre Mim",
     description:
-      "Oi, eu sou a Larissa — Engenheira Front-End Sênior com mais de 8 anos de experiência no desenvolvimento de aplicações web escaláveis, com forte especialização em Javascript e TypeScript. Atuação em projetos de grande porte, incluindo plataformas educacionais, streaming, PWAs offline-first e sistemas administrativos complexos. Experiência sólida em arquitetura frontend, performance, acessibilidade, CI/CD e integração com autenticação, analytics e microsserviços. Histórico em empresas líderes de tecnologia da América Latina como Mercado Livre (100M+ usuários), Méliuz (15M+ usuários), e PicPay (70M+ usuários), atuando em ambientes ágeis e de alta complexidade técnica.",
+      "Oi, eu sou a Larissa — Engenheira Front-End Sênior com mais de 9 anos de experiência no desenvolvimento de aplicações web escaláveis, com forte especialização em Javascript e TypeScript. Atuação em projetos de grande porte, incluindo plataformas educacionais, streaming, PWAs offline-first e sistemas administrativos complexos. Experiência sólida em arquitetura frontend, performance, acessibilidade, CI/CD e integração com autenticação, analytics e microsserviços. Histórico em empresas líderes de tecnologia da América Latina como Mercado Livre (100M+ usuários), Méliuz (15M+ usuários), e PicPay (70M+ usuários), atuando em ambientes ágeis e de alta complexidade técnica.",
     contactButton: "Entre em contato",
     projectsButton: "Ver projetos",
     downloadResume: "Baixar Currículo",
@@ -29,12 +29,33 @@ export const dictionary = {
   projects: {
     title: "Projetos",
     viewProject: "Ver projeto",
-    projectDescriptions: {
-      IPICMobile: "Aplicativo móvel desenvolvido em Ionic com backend em PHP (Projeto de TCC).",
-      MGNGWebsite:
-        "Interface de website para escritório de advocacia projetada no Figma e desenvolvida usando Laravel (PHP), MySQL e VueJS.",
-      FreelancePhotographer: "Website para fotógrafo desenvolvido usando NextJS, Vercel, Strapi e Stripe.",
-    },
+    items: [
+      {
+        name: "ICAN Model Management",
+        description: "Site institucional da agência de modelos ICAN Model Management.",
+        url: "https://www.icanmodelmanagement.com/en/home",
+        imageUrl: "/images/icanmodel.png",
+        year: "2018",
+      },
+      {
+        name: "Sebrae Streaming",
+        description: "Plataforma de streaming educacional do Sebrae-SP com ferramenta interna de administração de conteúdo e CMS próprio que construí, além de jornadas educacionais.",
+        url: "https://app-streaming.sebraesp.com.br/",
+        imageUrl: "/images/streaming-sebrae.png",
+        year: "2025",
+      },
+      {
+        name: "niido",
+        description: "App para casais que buscam mais conexão, com check-ins emocionais, listas compartilhadas e mapa da conexão. Pensado para casais neurodiversos.",
+        url: "https://niido.app/",
+        imageUrl: "/images/niido.png",
+        year: "2025",
+        links: [
+          { label: "App Store", url: "https://apps.apple.com/br/app/niido/id6742075036" },
+          { label: "Google Play", url: "https://play.google.com/store/apps/details?id=app.niido&pcampaignid=web_share" },
+        ],
+      },
+    ],
   },
   // Skills section
   skills: {

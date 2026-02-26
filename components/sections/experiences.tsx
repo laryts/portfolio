@@ -24,7 +24,7 @@ export function ExperiencesSection({ dictionary }: ExperiencesSectionProps) {
     return (
         <section
           id="xp"
-          className="py-20 px-4 md:px-8 bg-gray-100 dark:bg-dark-purple-900 transition-colors duration-300"
+          className="py-20 px-4 md:px-8"
         >
           <div className="max-w-4xl mx-auto">
             <AnimateOnScroll animation="fade" duration={0.8}>

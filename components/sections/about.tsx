@@ -11,7 +11,10 @@ export function AboutSection({ dictionary }: AboutSectionProps) {
   }
 
   return (
-    <section id="about" className="py-20 px-4 md:px-8 max-w-6xl mx-auto">
+    <section id="about" 
+      className="py-20 px-4 md:px-8 bg-gray-100 dark:bg-dark-purple-900 transition-colors duration-300"
+    >
+      <div className="max-w-6xl mx-auto">
       <AnimateOnScroll animation="fade" duration={0.8}>
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">{dictionary.about.title}</h2>
       </AnimateOnScroll>
@@ -63,6 +66,7 @@ export function AboutSection({ dictionary }: AboutSectionProps) {
             </div>
           </AnimateOnScroll>
         </div>
+      </div>
       </div>
     </section>
   )
