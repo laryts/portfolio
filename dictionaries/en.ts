@@ -55,6 +55,13 @@ export const dictionary = {
           { label: "Google Play", url: "https://play.google.com/store/apps/details?id=app.niido&pcampaignid=web_share" },
         ],
       },
+      {
+        name: "WanderCost",
+        description: "AI-powered travel cost estimation platform that helps users understand the real budget of a trip, generating projections for flights, accommodation, food and activities.",
+        url: "https://wandercost.vercel.app",
+        imageUrl: "/images/wandercost.png",
+        year: "2026",
+      },
     ],
   },
   // Skills section

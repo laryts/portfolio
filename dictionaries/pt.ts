@@ -55,6 +55,13 @@ export const dictionary = {
           { label: "Google Play", url: "https://play.google.com/store/apps/details?id=app.niido&pcampaignid=web_share" },
         ],
       },
+      {
+        name: "WanderCost",
+        description: "Plataforma de estimativa de custos de viagem com IA que ajuda usuários a entender o orçamento real de uma viagem, gerando projeções para voos, hospedagem, alimentação e atividades.",
+        url: "https://wandercost.vercel.app",
+        imageUrl: "/images/wandercost.png",
+        year: "2026",
+      },
     ],
   },
   // Skills section
