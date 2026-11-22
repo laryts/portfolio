@@ -1,7 +1,8 @@
 "use client"
 
 import * as React from "react"
-import { BookOpen, Plus, Star } from "lucide-react"
+import { BookOpen, Plus, Star, Upload } from "lucide-react"
+import { previewGoodreadsCsv, type GoodreadsPreview } from "@/lib/life/goodreads"
 import { useLife } from "../store"
 import { AREAS, AREA_IDS, BOOK_STATUS_LABEL, type AreaId, type Book, type BookStatus, type Mood } from "@/lib/life/types"
 import { formatDayShort, todayISO } from "@/lib/life/dates"
@@ -169,6 +170,96 @@ function GoalSheet({ open, onOpenChange, goal }: { open: boolean; onOpenChange: 
   )
 }
 
+function GoodreadsSheet({ open, onOpenChange, books }: { open: boolean; onOpenChange: (o: boolean) => void; books: Book[] }) {
+  const { update } = useLife()
+  const [preview, setPreview] = React.useState<GoodreadsPreview | null>(null)
+  const [fileName, setFileName] = React.useState("")
+  const [error, setError] = React.useState<string | null>(null)
+
+  React.useEffect(() => {
+    if (!open) {
+      setPreview(null)
+      setFileName("")
+      setError(null)
+    }
+  }, [open])
+
+  const onFile = async (file: File | undefined) => {
+    if (!file) return
+    setError(null)
+    setFileName(file.name)
+    try {
+      const text = await file.text()
+      const result = previewGoodreadsCsv(text, books)
+      if (result.books.length === 0 && result.duplicates === 0) {
+        setPreview(null)
+        setError("Não encontrei livros nesse arquivo. Confira se é o CSV do export do Goodreads.")
+        return
+      }
+      setPreview(result)
+    } catch {
+      setError("Não consegui ler esse arquivo.")
+    }
+  }
+
+  const importAll = () => {
+    if (!preview || preview.books.length === 0) return
+    const now = new Date().toISOString()
+    const created: Book[] = preview.books.map((b, i) => ({
+      ...b,
+      id: `gr-${Date.now().toString(36)}-${i}`,
+      createdAt: now,
+      updatedAt: now,
+    }))
+    update((prev) => ({ ...prev, books: [...created, ...prev.books] }))
+    haptic([10, 40, 10])
+    onOpenChange(false)
+  }
+
+  return (
+    <Sheet
+      open={open}
+      onOpenChange={onOpenChange}
+      title="Importar do Goodreads"
+      description="Traga sua biblioteca de uma vez. Nada é enviado para fora do seu aparelho."
+      footer={
+        <>
+          <button type="button" className="l-btn l-btn-ghost l-focus" onClick={() => onOpenChange(false)}>Fechar</button>
+          <button type="button" className="l-btn l-btn-plum l-focus" disabled={!preview || preview.books.length === 0} onClick={importAll}>
+            {preview ? `Importar ${preview.books.length} livro${preview.books.length === 1 ? "" : "s"}` : "Importar"}
+          </button>
+        </>
+      }
+    >
+      <div className="space-y-5 pb-4">
+        <ol className="l-ink-2 list-decimal space-y-1.5 pl-5 text-sm leading-relaxed">
+          <li>No Goodreads, abra <span className="font-semibold">My Books → Import and export</span>.</li>
+          <li>Clique em <span className="font-semibold">Export Library</span> e salve o arquivo CSV.</li>
+          <li>Escolha esse arquivo aqui.</li>
+        </ol>
+        <label className="l-card flex min-h-[64px] cursor-pointer items-center gap-3 border-dashed p-4 hover:bg-[var(--l-surface-2)]">
+          <Upload className="h-5 w-5 shrink-0" aria-hidden />
+          <span className="min-w-0 flex-1 truncate text-sm font-semibold">{fileName || "Escolher arquivo CSV"}</span>
+          <input type="file" accept=".csv,text/csv" className="sr-only" onChange={(e) => void onFile(e.target.files?.[0])} aria-label="Arquivo CSV do Goodreads" />
+        </label>
+        {error && <p role="alert" className="text-sm" style={{ color: "var(--l-danger)" }}>{error}</p>}
+        {preview && (
+          <div className="space-y-3 rounded-2xl p-4" style={{ background: "var(--l-bg-2)" }}>
+            <p className="text-sm font-semibold">Encontrei {preview.books.length} livro{preview.books.length === 1 ? "" : "s"} novo{preview.books.length === 1 ? "" : "s"}</p>
+            <ul className="l-ink-2 grid grid-cols-2 gap-2 text-sm">
+              <li>Lidos: <span className="font-semibold">{preview.counts.lido}</span></li>
+              <li>Lendo: <span className="font-semibold">{preview.counts.lendo}</span></li>
+              <li>Na fila: <span className="font-semibold">{preview.counts.fila}</span></li>
+              <li>Já existiam: <span className="font-semibold">{preview.duplicates}</span></li>
+            </ul>
+            <p className="l-muted text-xs">Livros nas prateleiras "pixie" ou "niido" entram na área correspondente. Os demais ficam em Pessoal.</p>
+          </div>
+        )}
+      </div>
+    </Sheet>
+  )
+}
+
 function Stars({ value }: { value?: Mood }) {
   if (!value) return null
   return (
@@ -187,6 +278,7 @@ export function ReadingView() {
   const [tab, setTab] = React.useState<BookStatus>("lendo")
   const [sheet, setSheet] = React.useState<{ open: boolean; book: Book | null; status: BookStatus }>({ open: false, book: null, status: "fila" })
   const [goalOpen, setGoalOpen] = React.useState(false)
+  const [importOpen, setImportOpen] = React.useState(false)
 
   const finishedThisYear = data.books.filter((b) => b.status === "lido" && b.finishedAt?.startsWith(year)).length
   const goal = data.readingGoal
@@ -227,7 +319,14 @@ export function ReadingView() {
         eyebrow="Crescer"
         title="Leitura"
         description={`${finishedThisYear} livro${finishedThisYear === 1 ? "" : "s"} terminado${finishedThisYear === 1 ? "" : "s"} em ${year}${pagesThisYear ? ` · ${pagesThisYear} páginas` : ""}`}
-        action={<AddButton label="Novo livro" onClick={() => setSheet({ open: true, book: null, status: tab })} />}
+        action={
+          <>
+            <button type="button" className="l-btn l-btn-ghost l-focus" onClick={() => setImportOpen(true)}>
+              <Upload className="h-4 w-4" aria-hidden /> Goodreads
+            </button>
+            <AddButton label="Novo livro" onClick={() => setSheet({ open: true, book: null, status: tab })} />
+          </>
+        }
       />
 
       <div className="mb-6 grid gap-4 md:grid-cols-3">
@@ -358,6 +457,7 @@ export function ReadingView() {
 
       <BookSheet open={sheet.open} onOpenChange={(open) => setSheet((s) => ({ ...s, open }))} book={sheet.book} defaultStatus={sheet.status} />
       <GoalSheet open={goalOpen} onOpenChange={setGoalOpen} goal={goal} />
+      <GoodreadsSheet open={importOpen} onOpenChange={setImportOpen} books={data.books} />
     </div>
   )
 }

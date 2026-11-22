@@ -243,6 +243,7 @@ export interface Book {
   startedAt?: string
   finishedAt?: string
   notes?: string
+  goodreadsId?: string // id do livro no export do Goodreads, evita duplicar na reimportação
   createdAt: string
   updatedAt: string
 }
