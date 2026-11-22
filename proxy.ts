@@ -385,6 +385,12 @@ export function proxy(request: NextRequest) {
       return addSecurityHeaders(response)
     }
 
+    // ===== PERSONAL APP (/life) =====
+    // Área privada fora do sistema de idiomas. Não é indexada e exige senha nas APIs.
+    if (pathname === '/life' || pathname.startsWith('/life/')) {
+      return addSecurityHeaders(NextResponse.next())
+    }
+
     // ===== LOCALE HANDLING =====
     
     // Paths that must not get a locale prefix (e.g. Sanity Studio at /studio)
