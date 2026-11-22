@@ -73,3 +73,32 @@ export async function saveLifeData(data: LifeData): Promise<void> {
   await mkdir(path.dirname(DEV_FILE), { recursive: true })
   await writeFile(DEV_FILE, serialized, "utf8")
 }
+
+/** Acesso genérico a outros documentos (ex.: tokens de integração), mesmo backend. */
+export async function readRaw(key: string): Promise<string | null> {
+  const mode = storageMode()
+  if (mode === "none") throw new StorageNotConfiguredError("Armazenamento não configurado")
+  if (mode === "kv") {
+    const result = await kvCommand(["GET", key])
+    return typeof result === "string" ? result : null
+  }
+  try {
+    return await readFile(path.join(process.cwd(), ".life-data", `${key.replace(/[^\w.-]/g, "_")}.json`), "utf8")
+  } catch {
+    return null
+  }
+}
+
+export async function writeRaw(key: string, value: string | null): Promise<void> {
+  const mode = storageMode()
+  if (mode === "none") throw new StorageNotConfiguredError("Armazenamento não configurado")
+  if (mode === "kv") {
+    if (value === null) await kvCommand(["DEL", key])
+    else await kvCommand(["SET", key, value])
+    return
+  }
+  const file = path.join(process.cwd(), ".life-data", `${key.replace(/[^\w.-]/g, "_")}.json`)
+  await mkdir(path.dirname(file), { recursive: true })
+  if (value === null) await writeFile(file, "", "utf8")
+  else await writeFile(file, value, "utf8")
+}

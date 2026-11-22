@@ -22,6 +22,8 @@ import {
 } from "@/lib/life/selectors"
 import { cn } from "@/lib/utils"
 import { ProgressRing } from "./shared"
+import { googleLocalDate, googleLocalTime, useGoogleCalendar } from "../google-calendar"
+import type { AreaId } from "@/lib/life/types"
 
 function plural(n: number, one: string, many: string) {
   return `${n} ${n === 1 ? one : many}`
@@ -87,7 +89,15 @@ export function HomeView() {
     .sort((a, b) => b.spent / b.limit - a.spent / a.limit)
     .slice(0, 3)
 
-  const events = data.events
+  const googleNext7 = useGoogleCalendar(today, addDays(today, 8))
+  const googleAgenda = googleNext7.events.map((e) => ({
+    id: `g-${e.id}`,
+    title: e.title,
+    date: googleLocalDate(e),
+    time: googleLocalTime(e),
+    area: "pessoal" as AreaId,
+  }))
+  const events = [...data.events, ...googleAgenda]
     .filter((e) => e.date >= today && e.date <= addDays(today, 7))
     .sort((a, b) => (a.date === b.date ? (a.time ?? "").localeCompare(b.time ?? "") : a.date < b.date ? -1 : 1))
     .slice(0, 5)

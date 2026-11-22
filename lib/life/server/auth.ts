@@ -35,7 +35,7 @@ export function sessionCookieOptions() {
   return {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "strict" as const,
+    sameSite: "lax" as const, // lax: o retorno do OAuth do Google precisa enviar o cookie de sessão
     path: "/",
     maxAge: SESSION_TTL_SECONDS,
   }

@@ -40,3 +40,31 @@ Em desenvolvimento local (`pnpm dev`) não é preciso banco: os dados vão para
 - `lib/life/` — tipos, datas, formatação, cálculos puros (`selectors.ts`), auth e storage do servidor.
 - `components/life/` — store cliente (`store.tsx`), tema, shell de navegação, primitivos de UI e uma pasta `views/` por módulo.
 - `app/life/` — rota e estilos próprios (`life.css`), com tokens de cor para claro e escuro.
+
+## Google Calendar
+
+Mostra seus eventos do Google Calendar no `/life` (calendário, agenda do Hoje). É somente leitura:
+os eventos não são copiados para o app, são buscados a cada abertura.
+
+### Configurar no Google Cloud (uma vez)
+
+1. Em console.cloud.google.com, crie um projeto e ative a **Google Calendar API** (APIs & Services → Library).
+2. Em **OAuth consent screen**, escolha *External*, dê um nome ao app e adicione o escopo
+   `.../auth/calendar.readonly`. Inclua o seu e-mail como *test user*.
+   Recomendo publicar o app (*Publish app*): em modo de teste o Google expira o acesso a cada 7 dias.
+3. Em **Credentials → Create credentials → OAuth client ID**, tipo *Web application*, e em
+   *Authorized redirect URIs* adicione:
+   - `https://larissasoares.dev/api/life/google/callback`
+   - `http://localhost:3000/api/life/google/callback` (para desenvolvimento)
+
+### Variáveis de ambiente
+
+| Variável | Obrigatória | O que é |
+| --- | --- | --- |
+| `GOOGLE_CLIENT_ID` | sim | Client ID do OAuth. |
+| `GOOGLE_CLIENT_SECRET` | sim | Client secret do OAuth. |
+| `GOOGLE_REDIRECT_URI` | não | Padrão: `NEXT_PUBLIC_SITE_URL` + `/api/life/google/callback`. |
+
+Depois de configurar, abra `/life`, vá em **Calendário** e toque em **Conectar Google Calendar**.
+O refresh token é guardado cifrado (AES-256-GCM) no mesmo armazenamento do app.
+Para desconectar, use o botão **Desconectar** na tela de calendário.

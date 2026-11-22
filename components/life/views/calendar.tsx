@@ -1,7 +1,8 @@
 "use client"
 
 import * as React from "react"
-import { CalendarDays, ChevronLeft, ChevronRight, Clock } from "lucide-react"
+import { CalendarDays, ChevronLeft, ChevronRight, Clock, Link2, RefreshCw } from "lucide-react"
+import { googleLocalDate, googleLocalTime, useGoogleCalendar } from "../google-calendar"
 import { useLife } from "../store"
 import { AREAS, AREA_IDS, type AreaId, type CalEvent } from "@/lib/life/types"
 import { daysInMonth, formatMonthTitle, monthKey, parseISO, shiftMonth, todayISO, toISO } from "@/lib/life/dates"
@@ -114,15 +115,35 @@ export function CalendarView() {
   ]
   while (cells.length % 7 !== 0) cells.push(null)
 
+  const google = useGoogleCalendar(`${month}-01`, `${shiftMonth(month, 1)}-01`)
+  const googleByDay = React.useMemo(() => {
+    const map = new Map<string, typeof google.events>()
+    for (const e of google.events) {
+      const d = googleLocalDate(e)
+      map.set(d, [...(map.get(d) ?? []), e])
+    }
+    return map
+  }, [google.events])
+  const [gFlash] = React.useState(() => (typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("google") : null))
+
   const dayItems = React.useMemo(() => {
+    const googleDay = (googleByDay.get(selected) ?? []).sort((a, b) => (googleLocalTime(a) ?? "").localeCompare(googleLocalTime(b) ?? ""))
     const events = data.events.filter((e) => e.date === selected).sort((a, b) => (a.time ?? "").localeCompare(b.time ?? ""))
     const tasks = data.tasks.filter((t) => t.due === selected)
     const reminders = data.reminders.filter((r) => r.date === selected)
     const trips = data.trips.filter((t) => t.start === selected || t.end === selected)
-    return { events, tasks, reminders, trips }
-  }, [data, selected])
+    return { events, tasks, reminders, trips, google: googleDay }
+  }, [data, selected, googleByDay])
 
-  const hasItems = dayItems.events.length + dayItems.tasks.length + dayItems.reminders.length + dayItems.trips.length > 0
+  const hasItems = dayItems.events.length + dayItems.tasks.length + dayItems.reminders.length + dayItems.trips.length + dayItems.google.length > 0
+  const googleNotice: Record<string, string> = {
+    ok: "Google Calendar conectado.",
+    denied: "Você não concedeu acesso ao Google Calendar.",
+    state: "A conexão expirou. Tente conectar de novo.",
+    error: "Não consegui concluir a conexão com o Google.",
+    config: "A integração com o Google ainda não está configurada no servidor.",
+    login: "Entre no painel antes de conectar o Google.",
+  }
 
   const goTo = (iso: string) => {
     setSelected(iso)
@@ -137,6 +158,8 @@ export function CalendarView() {
         description="Eventos, prazos, lembretes e viagens num só lugar."
         action={<AddButton label="Compromisso" onClick={() => setSheet({ open: true, event: null })} />}
       />
+
+      <GoogleBar status={google.status} error={google.error} onReload={google.reload} onDisconnect={google.disconnect} notice={gFlash ? googleNotice[gFlash] : undefined} />
 
       <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
         <Card>
@@ -162,6 +185,7 @@ export function CalendarView() {
             {cells.map((d, i) => {
               if (!d) return <span key={`e-${i}`} aria-hidden />
               const m = markers.get(d)
+              const gCount = googleByDay.get(d)?.length ?? 0
               const isToday = d === today
               const isSel = d === selected
               const dayNum = parseISO(d).getDate()
@@ -174,7 +198,7 @@ export function CalendarView() {
                     setSelected(d)
                   }}
                   aria-pressed={isSel}
-                  aria-label={`${dayNum} de ${formatMonthTitle(month)}${m ? `, ${m.events + m.tasks + m.reminders + m.trips} itens` : ""}`}
+                  aria-label={`${dayNum} de ${formatMonthTitle(month)}${m || gCount ? `, ${(m ? m.events + m.tasks + m.reminders + m.trips : 0) + gCount} itens` : ""}`}
                   className={cn(
                     "l-focus relative flex aspect-square min-h-[44px] flex-col items-center justify-center gap-1 rounded-2xl text-[15px] font-semibold transition-colors",
                     isSel ? "bg-[var(--l-plum)] text-white" : "hover:bg-[var(--l-surface-2)]",
@@ -183,7 +207,7 @@ export function CalendarView() {
                 >
                   {dayNum}
                   <span className="flex h-1.5 items-center gap-0.5">
-                    {m?.events ? <span className="h-1.5 w-1.5 rounded-full" style={{ background: isSel ? "#fff" : "var(--l-sky)" }} /> : null}
+                    {m?.events || gCount ? <span className="h-1.5 w-1.5 rounded-full" style={{ background: isSel ? "#fff" : "var(--l-sky)" }} /> : null}
                     {m?.tasks ? <span className="h-1.5 w-1.5 rounded-full" style={{ background: isSel ? "#fff" : "var(--l-coral)" }} /> : null}
                     {m?.reminders ? <span className="h-1.5 w-1.5 rounded-full" style={{ background: isSel ? "#fff" : "var(--l-mustard)" }} /> : null}
                     {m?.trips ? <span className="h-1.5 w-1.5 rounded-full" style={{ background: isSel ? "#fff" : "var(--l-teal)" }} /> : null}
@@ -214,6 +238,22 @@ export function CalendarView() {
             />
           ) : (
             <ul className="space-y-2">
+              {dayItems.google.map((e) => (
+                <li key={`g-${e.id}`} className="flex items-center gap-3 rounded-2xl border border-dashed p-3" style={{ borderColor: "var(--l-border-strong)" }}>
+                  <span className="h-10 w-1.5 shrink-0 rounded-full" style={{ background: "var(--l-sky)" }} aria-hidden />
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate font-semibold">{e.title}</p>
+                    <p className="l-muted flex items-center gap-1 text-xs">
+                      {googleLocalTime(e) ? <><Clock className="h-3 w-3" aria-hidden /> {googleLocalTime(e)}</> : "dia inteiro"} · Google Calendar
+                    </p>
+                  </div>
+                  {e.link && (
+                    <a href={e.link} target="_blank" rel="noopener noreferrer" className="l-btn-icon l-focus" aria-label={`Abrir ${e.title} no Google Calendar`}>
+                      <Link2 className="h-4 w-4" aria-hidden />
+                    </a>
+                  )}
+                </li>
+              ))}
               {dayItems.events.map((e) => (
                 <li key={e.id} className="flex items-center gap-3 rounded-2xl border p-3" style={{ borderColor: "var(--l-border)" }}>
                   <span className={cn("h-10 w-1.5 shrink-0 rounded-full", `area-bar-${AREAS[e.area].color}`)} aria-hidden />
@@ -260,6 +300,44 @@ export function CalendarView() {
         event={sheet.event}
         defaultDate={selected}
       />
+    </div>
+  )
+}
+
+function GoogleBar({
+  status,
+  error,
+  onReload,
+  onDisconnect,
+  notice,
+}: {
+  status: "loading" | "off" | "disconnected" | "connected" | "error"
+  error: string | null
+  onReload: () => void
+  onDisconnect: () => void
+  notice?: string
+}) {
+  if (status === "off" && !notice) return null
+  return (
+    <div className="l-card mb-4 flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-sm">
+      {notice && <p className="font-semibold">{notice}</p>}
+      {!notice && status === "connected" && <p className="l-ink-2">Mostrando também seu Google Calendar (somente leitura).</p>}
+      {!notice && status === "loading" && <p className="l-muted">Buscando seus eventos do Google…</p>}
+      {!notice && status === "error" && <p role="alert" style={{ color: "var(--l-danger)" }}>{error ?? "Não consegui atualizar o Google Calendar."}</p>}
+      {!notice && status === "disconnected" && <p className="l-ink-2">Quer ver seus eventos do Google aqui?</p>}
+      <div className="flex items-center gap-2">
+        {status === "disconnected" && (
+          <a href="/api/life/google/connect" className="l-btn l-btn-plum l-focus h-11 px-4">Conectar Google Calendar</a>
+        )}
+        {(status === "connected" || status === "error") && (
+          <>
+            <button type="button" className="l-btn l-btn-ghost l-focus h-11 px-3" onClick={onReload} aria-label="Atualizar eventos do Google">
+              <RefreshCw className="h-4 w-4" aria-hidden />
+            </button>
+            <button type="button" className="l-btn l-btn-ghost l-focus h-11 px-3" onClick={onDisconnect}>Desconectar</button>
+          </>
+        )}
+      </div>
     </div>
   )
 }
