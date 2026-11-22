@@ -190,6 +190,31 @@ export function Field({
   children: React.ReactNode
   className?: string
 }) {
+  const id = React.useId()
+  const first = React.Children.toArray(children)[0]
+  // Controle direto (input/select/textarea ou nossos wrappers): rótulo associado por htmlFor,
+  // para que o nome acessível seja só o label, não o conteúdo do campo.
+  const isDirectControl =
+    React.isValidElement(first) &&
+    (first.type === TextInput || first.type === Select || first.type === TextArea || (typeof first.type === "string" && ["input", "select", "textarea"].includes(first.type)))
+
+  if (isDirectControl) {
+    const control = React.cloneElement(first as React.ReactElement<{ id?: string }>, {
+      id: (first as React.ReactElement<{ id?: string }>).props.id ?? id,
+    })
+    const rest = React.Children.toArray(children).slice(1)
+    return (
+      <div className={cn("block", className)}>
+        <label htmlFor={(first as React.ReactElement<{ id?: string }>).props.id ?? id} className="l-label">
+          {label}
+        </label>
+        {control}
+        {rest}
+        {hint && <span className="l-muted mt-1.5 block text-xs">{hint}</span>}
+      </div>
+    )
+  }
+
   return (
     <label className={cn("block", className)}>
       <span className="l-label">{label}</span>

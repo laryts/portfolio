@@ -7,6 +7,7 @@ import {
   CheckSquare,
   Cloud,
   CloudOff,
+  BookOpen,
   Ellipsis,
   FolderKanban,
   Gift,
@@ -42,6 +43,7 @@ export type ViewId =
   | "calendario"
   | "bemestar"
   | "momentos"
+  | "leitura"
   | "pessoas"
   | "viagens"
   | "lar"
@@ -60,6 +62,7 @@ export const VIEWS: ViewMeta[] = [
   { id: "calendario", label: "Calendário", icon: CalendarDays, group: "Dia a dia" },
   { id: "habitos", label: "Hábitos", icon: CalendarCheck, group: "Dia a dia" },
   { id: "metas", label: "Metas", icon: Target, group: "Crescer" },
+  { id: "leitura", label: "Leitura", icon: BookOpen, group: "Crescer" },
   { id: "projetos", label: "Projetos", icon: FolderKanban, group: "Crescer" },
   { id: "financas", label: "Finanças", icon: Wallet, group: "Dinheiro" },
   { id: "desejos", label: "Desejos", icon: Gift, group: "Dinheiro" },

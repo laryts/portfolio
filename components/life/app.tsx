@@ -16,6 +16,7 @@ import { WishlistView } from "./views/wishlist"
 import { ProjectsView } from "./views/projects"
 import { CalendarView } from "./views/calendar"
 import { WellbeingView } from "./views/wellbeing"
+import { ReadingView } from "./views/reading"
 import { MomentsView } from "./views/moments"
 import { PeopleView } from "./views/people"
 import { TripsView } from "./views/trips"
@@ -26,6 +27,7 @@ const VIEW_COMPONENTS: Record<ViewId, React.ComponentType> = {
   hoje: HomeView,
   tarefas: TasksView,
   metas: GoalsView,
+  leitura: ReadingView,
   habitos: HabitsView,
   financas: FinanceView,
   desejos: WishlistView,

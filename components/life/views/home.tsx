@@ -391,6 +391,38 @@ export function HomeView() {
           )}
         </Card>
 
+        {/* Leitura */}
+        <Card>
+          <WidgetHead eyebrow="Leitura" title={data.books.filter((b) => b.status === "lendo").length ? "Lendo agora" : "Nenhum livro em curso"} to="leitura" />
+          {(() => {
+            const reading = data.books.filter((b) => b.status === "lendo")[0]
+            const year = today.slice(0, 4)
+            const doneYear = data.books.filter((b) => b.status === "lido" && b.finishedAt?.startsWith(year)).length
+            return (
+              <div className="space-y-4">
+                {reading ? (
+                  <div>
+                    <p className="truncate text-[14.5px] font-semibold">{reading.title}</p>
+                    {reading.pages ? (
+                      <>
+                        <div className="l-muted my-2 text-xs">Página {reading.currentPage ?? 0} de {reading.pages}</div>
+                        <ProgressBar value={((reading.currentPage ?? 0) / reading.pages) * 100} color={AREAS[reading.area].color as "teal"} label={`Progresso de ${reading.title}`} />
+                      </>
+                    ) : (
+                      <p className="l-muted mt-1 text-xs">Cadastre o total de páginas para ver o progresso.</p>
+                    )}
+                  </div>
+                ) : (
+                  <Empty title="Sem leitura em andamento" text="Escolha o próximo livro da fila." />
+                )}
+                <p className="l-muted text-xs">
+                  {data.readingGoal ? `${doneYear} de ${data.readingGoal} livros em ${year}` : `${doneYear} livro${doneYear === 1 ? "" : "s"} terminado${doneYear === 1 ? "" : "s"} em ${year}`}
+                </p>
+              </div>
+            )
+          })()}
+        </Card>
+
         {/* Finanças do mês */}
         <Card>
           <WidgetHead eyebrow="Finanças" title="Neste mês" to="financas" />

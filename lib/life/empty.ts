@@ -20,6 +20,7 @@ export function emptyLifeData(): LifeData {
     groceries: [],
     trips: [],
     friends: [],
+    books: [],
   }
 }
 
@@ -39,6 +40,7 @@ const LIST_KEYS = [
   "groceries",
   "trips",
   "friends",
+  "books",
 ] as const
 
 /**
@@ -68,6 +70,9 @@ export function normalizeLifeData(input: unknown): LifeData | null {
       if (typeof v === "number" && Number.isFinite(v) && v >= 0) budgets[k] = v
     }
     base.budgets = budgets
+  }
+  if (typeof src.readingGoal === "number" && src.readingGoal > 0 && src.readingGoal <= 1000) {
+    base.readingGoal = Math.round(src.readingGoal)
   }
   base.updatedAt = typeof src.updatedAt === "string" ? src.updatedAt : base.updatedAt
   return base

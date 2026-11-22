@@ -223,6 +223,30 @@ export interface Friend {
   createdAt: string
 }
 
+export type BookStatus = "fila" | "lendo" | "lido" | "abandonado"
+export const BOOK_STATUS_LABEL: Record<BookStatus, string> = {
+  fila: "Na fila",
+  lendo: "Lendo",
+  lido: "Lido",
+  abandonado: "Abandonado",
+}
+
+export interface Book {
+  id: string
+  title: string
+  author?: string
+  status: BookStatus
+  area: AreaId // ex.: "pixie" para leituras de trabalho
+  pages?: number
+  currentPage?: number
+  rating?: Mood
+  startedAt?: string
+  finishedAt?: string
+  notes?: string
+  createdAt: string
+  updatedAt: string
+}
+
 export interface LifeData {
   version: 1
   updatedAt: string
@@ -242,6 +266,8 @@ export interface LifeData {
   groceries: GroceryItem[]
   trips: Trip[]
   friends: Friend[]
+  books: Book[]
+  readingGoal?: number // livros lidos por ano
 }
 
 export type ListKey =
@@ -260,3 +286,4 @@ export type ListKey =
   | "groceries"
   | "trips"
   | "friends"
+  | "books"
