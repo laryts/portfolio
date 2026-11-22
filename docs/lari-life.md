@@ -8,36 +8,48 @@ momentos, pessoas, viagens, lar & gatos e mercado.
 
 - **Acesso:** a página `/life` pede uma senha. As rotas de dados exigem um cookie
   httpOnly assinado; sem a senha nada é devolvido pelo servidor.
-- **Persistência:** os dados são um único documento JSON salvo no servidor
-  (Upstash Redis / Vercel KV via REST). O navegador guarda uma cópia local para
-  abrir instantaneamente e funcionar offline; alterações pendentes são enviadas
-  quando a conexão volta.
-- **Vários aparelhos:** computador e celular leem o mesmo documento no servidor.
-  Em caso de edição simultânea, vale a última gravação (uso pessoal, um usuário).
+- **Banco:** Postgres no Neon, acessado com Drizzle ORM. Cada coleção do app é uma tabela
+  (`life_tasks`, `life_transactions`, `life_books`...). O item completo fica em `data` (jsonb),
+  com colunas de data e posição para consultas e ordem.
+- **Cache local:** o navegador guarda uma cópia para abrir na hora e funcionar offline;
+  alterações pendentes são enviadas quando a conexão volta.
+- **Vários aparelhos:** computador e celular leem o mesmo banco.
 
-## Variáveis de ambiente (Vercel → Settings → Environment Variables)
+## Configurar o banco (uma vez)
+
+1. Na Vercel, abra o projeto → **Storage → Marketplace → Neon** e conecte. A variável `DATABASE_URL` é criada.
+2. Aplique as migrações no banco (uma vez e a cada mudança de schema):
+
+   ```bash
+   DATABASE_URL="postgres://..." pnpm db:migrate
+   ```
+
+3. Faça o deploy. O app não cria tabelas sozinho: rode `db:migrate` antes de publicar mudanças de schema.
+
+Para desenvolver localmente, use qualquer Postgres (por exemplo, `docker run -p 5432:5432 -e POSTGRES_PASSWORD=dev postgres:16`)
+e defina `DATABASE_URL=postgres://postgres:dev@localhost:5432/postgres` no `.env.local`.
+Sem `DATABASE_URL` em desenvolvimento, os dados vão para `.life-data/` (ignorado pelo git).
+
+## Variáveis de ambiente
 
 | Variável | Obrigatória | O que é |
 | --- | --- | --- |
 | `LIFE_PASSCODE` | sim | Senha para entrar em `/life`. |
 | `LIFE_SESSION_SECRET` | não | Chave usada para assinar a sessão. Se ausente, usa a própria `LIFE_PASSCODE`. |
-| `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` | sim em produção | Banco onde os dados ficam. Também aceita `KV_REST_API_URL` / `KV_REST_API_TOKEN` (Vercel KV). |
+| `DATABASE_URL` | sim em produção | Conexão Postgres (Neon). |
 
-Como criar o banco: no painel da Vercel, **Storage → Marketplace → Upstash (Redis)**,
-conecte ao projeto do portfólio. As variáveis REST são criadas automaticamente.
-
-Em desenvolvimento local (`pnpm dev`) não é preciso banco: os dados vão para
-`.life-data/life.json` (ignorado pelo git). Defina `LIFE_PASSCODE` no `.env.local`.
+Para gerar novas migrações depois de mudar `lib/life/db/schema.ts`: `pnpm db:generate`.
 
 ## Rotas
 
 - `/life` — o app (fora do sistema de idiomas; não é indexado).
 - `/api/life/session` — `GET` estado da sessão, `POST` login, `DELETE` sair.
-- `/api/life/data` — `GET` carrega os dados, `PUT` grava o documento inteiro.
+- `/api/life/data` — `GET` carrega os dados, `PUT` grava o documento inteiro (transação no banco).
 
 ## Estrutura do código
 
-- `lib/life/` — tipos, datas, formatação, cálculos puros (`selectors.ts`), auth e storage do servidor.
+- `lib/life/` — tipos, datas, formatação, cálculos puros (`selectors.ts`), auth e storage do servidor (`server/store.ts`).
+- `lib/life/db/` — schema do Drizzle e conexão com o Postgres. Migrações em `drizzle/`.
 - `components/life/` — store cliente (`store.tsx`), tema, shell de navegação, primitivos de UI e uma pasta `views/` por módulo.
 - `app/life/` — rota e estilos próprios (`life.css`), com tokens de cor para claro e escuro.
 
