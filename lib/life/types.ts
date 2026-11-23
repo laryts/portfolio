@@ -29,6 +29,7 @@ export interface Task {
   due?: string
   done: boolean
   doneAt?: string
+  projectId?: string
   createdAt: string
 }
 

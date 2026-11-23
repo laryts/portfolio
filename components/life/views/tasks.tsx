@@ -21,9 +21,10 @@ function TaskSheet({
   onOpenChange: (o: boolean) => void
   task: Task | null
 }) {
-  const { add, patch } = useLife()
+  const { add, patch, data } = useLife()
   const [title, setTitle] = React.useState("")
   const [area, setArea] = React.useState<AreaId>("pessoal")
+  const [projectId, setProjectId] = React.useState("")
   const [priority, setPriority] = React.useState<Priority>(2)
   const [due, setDue] = React.useState("")
 
@@ -31,6 +32,7 @@ function TaskSheet({
     if (!open) return
     setTitle(task?.title ?? "")
     setArea(task?.area ?? "pessoal")
+    setProjectId(task?.projectId ?? "")
     setPriority(task?.priority ?? 2)
     setDue(task?.due ?? "")
   }, [open, task])
@@ -38,7 +40,7 @@ function TaskSheet({
   const save = (e?: React.FormEvent) => {
     e?.preventDefault()
     if (!title.trim()) return
-    const payload = { title: title.trim(), area, priority, due: emptyToUndef(due), done: task?.done ?? false }
+    const payload = { title: title.trim(), area, priority, due: emptyToUndef(due), done: task?.done ?? false, projectId: projectId || undefined }
     if (task) patch("tasks", task.id, payload)
     else add("tasks", payload)
     haptic(8)
@@ -70,6 +72,12 @@ function TaskSheet({
               ))}
             </Select>
           </Field>
+          <Field label="Projeto" hint="Opcional. Vincular faz o progresso do projeto ser calculado por esta tarefa.">
+            <Select value={projectId} onChange={(e) => setProjectId(e.target.value)}>
+              <option value="">Sem projeto</option>
+              {data.projects.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
+            </Select>
+          </Field>
           <Field label="Prazo">
             <TextInput type="date" value={due} onChange={(e) => setDue(e.target.value)} />
           </Field>
@@ -89,6 +97,7 @@ function TaskSheet({
 
 export function TasksView() {
   const { data, patch, remove } = useLife()
+  const projectName = (id?: string) => data.projects.find((p) => p.id === id)?.name
   const today = todayISO()
   const [filter, setFilter] = React.useState<Filter>("abertas")
   const [areaFilter, setAreaFilter] = React.useState<AreaId | "todas">("todas")
@@ -186,6 +195,9 @@ export function TasksView() {
                             <p className={cn("truncate text-[15px] font-medium", t.done && "line-through")}>{t.title}</p>
                             <div className="mt-1 flex flex-wrap items-center gap-2 text-xs">
                               <AreaBadge area={t.area} />
+                              {projectName(t.projectId) && (
+                                <span className="l-chip" style={{ background: "var(--l-bg-2)", color: "var(--l-ink-2)" }}>{projectName(t.projectId)}</span>
+                              )}
                               {t.due && (
                                 <span className="l-muted font-semibold" style={overdue ? { color: "var(--l-danger)" } : undefined}>
                                   {formatDayShort(t.due)}

@@ -1,6 +1,6 @@
 // Cálculos puros sobre o LifeData. Sem React — fáceis de testar e reutilizar.
 import { addDays, diffDays, monthKey, startOfWeek, todayISO, weekDays } from "./dates"
-import type { Habit, LifeData, Reminder, Transaction, Friend, Cat, Task } from "./types"
+import type { Habit, LifeData, Reminder, Transaction, Friend, Cat, Task, Project, ProjectStatus } from "./types"
 
 export function isOverdue(due: string | undefined, today = todayISO()): boolean {
   return !!due && due < today
@@ -134,4 +134,45 @@ export function weekSummary(data: LifeData, today = todayISO()) {
 
 export function tasksDueOn(tasks: Task[], date: string): Task[] {
   return tasks.filter((t) => t.due === date)
+}
+
+export interface ProjectInsight {
+  linked: Task[]
+  open: Task[]
+  done: number
+  total: number
+  /** Progresso calculado pelas tarefas; null quando não há tarefas vinculadas. */
+  progress: number | null
+  next?: Task
+  lastActivity: string
+  staleDays: number
+  suggestion: null | { text: string; actionLabel: string; status: ProjectStatus }
+}
+
+/** Tudo que o detalhe do projeto precisa, calculado a partir das tarefas vinculadas. */
+export function projectInsight(project: Project, tasks: Task[], today = todayISO()): ProjectInsight {
+  const linked = tasks.filter((t) => t.projectId === project.id)
+  const open = sortTasks(linked.filter((t) => !t.done))
+  const done = linked.length - open.length
+  const total = linked.length
+  const progress = total > 0 ? Math.round((done / total) * 100) : null
+
+  const candidates = [
+    project.updatedAt?.slice(0, 10),
+    ...linked.map((t) => t.doneAt?.slice(0, 10)),
+    ...linked.map((t) => t.createdAt.slice(0, 10)),
+  ].filter((d): d is string => !!d)
+  const lastActivity = candidates.sort().at(-1) ?? today
+  const staleDays = Math.max(0, diffDays(lastActivity, today))
+
+  let suggestion: ProjectInsight["suggestion"] = null
+  if (project.status !== "concluido" && total > 0 && open.length === 0) {
+    suggestion = { text: "Todas as tarefas estão feitas.", actionLabel: "Marcar como concluído", status: "concluido" }
+  } else if (project.status === "ideia" && total > 0) {
+    suggestion = { text: "Já tem tarefas vinculadas. Começou?", actionLabel: "Marcar em andamento", status: "andamento" }
+  } else if (project.status === "andamento" && staleDays >= 14) {
+    suggestion = { text: `Sem movimento há ${staleDays} dias.`, actionLabel: "Pausar projeto", status: "pausado" }
+  }
+
+  return { linked, open, done, total, progress, next: open[0], lastActivity, staleDays, suggestion }
 }
