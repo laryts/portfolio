@@ -6,25 +6,31 @@ import { useLife } from "../store"
 import { AREAS, AREA_IDS, type AreaId, type Goal } from "@/lib/life/types"
 import { formatDayShort, diffDays, todayISO } from "@/lib/life/dates"
 import { formatBRL } from "@/lib/life/format"
-import { AddButton, AreaBadge, Card, Empty, Field, PageHeader, ProgressBar, Select, Sheet, TextInput, haptic } from "../ui"
+import { AddButton, AreaBadge, Card, Empty, Field, PageHeader, ProgressBar, Segmented, Select, Sheet, TextInput, haptic } from "../ui"
 import { RowActions, emptyToUndef, parseFloatSafe } from "./shared"
 
 const UNIT_PRESETS = ["R$", "livros", "km", "%", "vezes", "dias"]
+
+const MONEY_UNITS = ["R$", "R"]
+const isMoney = (unit: string) => MONEY_UNITS.includes(unit.trim())
 
 function GoalSheet({ open, onOpenChange, goal }: { open: boolean; onOpenChange: (o: boolean) => void; goal: Goal | null }) {
   const { add, patch } = useLife()
   const [title, setTitle] = React.useState("")
   const [area, setArea] = React.useState<AreaId>("pessoal")
-  const [unit, setUnit] = React.useState("R$")
+  const [kind, setKind] = React.useState<"money" | "qty">("money")
+  const [unit, setUnit] = React.useState("")
   const [current, setCurrent] = React.useState("0")
   const [target, setTarget] = React.useState("100")
   const [deadline, setDeadline] = React.useState("")
 
   React.useEffect(() => {
     if (!open) return
+    const money = goal ? isMoney(goal.unit) : true
     setTitle(goal?.title ?? "")
     setArea(goal?.area ?? "pessoal")
-    setUnit(goal?.unit ?? "R$")
+    setKind(money ? "money" : "qty")
+    setUnit(money ? "" : goal?.unit ?? "")
     setCurrent(String(goal?.current ?? 0))
     setTarget(String(goal?.target ?? 100))
     setDeadline(goal?.deadline ?? "")
@@ -39,7 +45,7 @@ function GoalSheet({ open, onOpenChange, goal }: { open: boolean; onOpenChange: 
     const payload = {
       title: title.trim(),
       area,
-      unit: unit.trim() || "un",
+      unit: kind === "money" ? "R$" : unit.trim(),
       current: Math.max(0, parseFloatSafe(current, 0)),
       target: targetNum,
       deadline: emptyToUndef(deadline),
@@ -65,43 +71,55 @@ function GoalSheet({ open, onOpenChange, goal }: { open: boolean; onOpenChange: 
     >
       <form onSubmit={save} className="space-y-5 pb-4">
         <Field label="Meta">
-          <TextInput autoFocus value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Ex.: Juntar para a viagem" maxLength={120} />
+          <TextInput autoFocus value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Ex.: Vender a primeira caixa da Pixie" maxLength={120} />
         </Field>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <Field label="Área">
-            <Select value={area} onChange={(e) => setArea(e.target.value as AreaId)}>
-              {AREA_IDS.map((a) => (
-                <option key={a} value={a}>{AREAS[a].label}</option>
-              ))}
-            </Select>
-          </Field>
-          <Field label="Prazo" hint="Opcional">
-            <TextInput type="date" value={deadline} onChange={(e) => setDeadline(e.target.value)} />
-          </Field>
-        </div>
-        <div className="grid grid-cols-3 gap-3">
-          <Field label="Unidade" className="col-span-1">
-            <TextInput list="unit-presets" value={unit} onChange={(e) => setUnit(e.target.value)} maxLength={12} />
+        <Field label="Tipo de meta">
+          <Segmented<"money" | "qty">
+            label="Tipo de meta"
+            value={kind}
+            onChange={setKind}
+            options={[
+              { value: "money", label: "Dinheiro (R$)" },
+              { value: "qty", label: "Quantidade" },
+            ]}
+          />
+        </Field>
+        {kind === "qty" && (
+          <Field label="Unidade" hint="Ex.: caixas, livros, km. Pode deixar em branco.">
+            <TextInput list="unit-presets" value={unit} onChange={(e) => setUnit(e.target.value)} maxLength={20} placeholder="caixas" />
             <datalist id="unit-presets">
-              {UNIT_PRESETS.map((u) => <option key={u} value={u} />)}
+              {["caixas", "unidades", "livros", "km", "vezes", "dias", "%"].map((u) => <option key={u} value={u} />)}
             </datalist>
           </Field>
-          <Field label="Já tenho" className="col-span-1">
+        )}
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Já tenho">
             <TextInput inputMode="decimal" value={current} onChange={(e) => setCurrent(e.target.value)} />
           </Field>
-          <Field label="Alvo" className="col-span-1">
+          <Field label="Alvo">
             <TextInput inputMode="decimal" value={target} onChange={(e) => setTarget(e.target.value)} />
           </Field>
         </div>
-        {!valid && title.length > 0 && <p className="text-xs" style={{ color: "var(--l-danger)" }}>O alvo precisa ser maior que zero.</p>}
+        <Field label="Prazo" hint="Opcional">
+          <TextInput type="date" value={deadline} onChange={(e) => setDeadline(e.target.value)} />
+        </Field>
+        <div className="grid grid-cols-2 gap-4">
+          <Field label="Área">
+            <Select value={area} onChange={(e) => setArea(e.target.value as AreaId)}>
+              {AREA_IDS.map((a) => <option key={a} value={a}>{AREAS[a].label}</option>)}
+            </Select>
+          </Field>
+        </div>
+        {!targetNum && title.length > 0 && <p className="text-xs" style={{ color: "var(--l-danger)" }}>O alvo precisa ser maior que zero.</p>}
       </form>
     </Sheet>
   )
 }
 
 function formatValue(value: number, unit: string) {
-  if (unit === "R$") return formatBRL(Math.round(value * 100))
-  return `${Number.isInteger(value) ? value : value.toFixed(1).replace(".", ",")} ${unit}`
+  if (isMoney(unit)) return formatBRL(Math.round(value * 100))
+  const n = Number.isInteger(value) ? String(value) : value.toFixed(1).replace(".", ",")
+  return unit ? `${n} ${unit}` : n
 }
 
 export function GoalsView() {
