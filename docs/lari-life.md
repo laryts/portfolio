@@ -18,13 +18,8 @@ momentos, pessoas, viagens, lar & gatos e mercado.
 ## Configurar o banco (uma vez)
 
 1. Na Vercel, abra o projeto → **Storage → Marketplace → Neon** e conecte. A variável `DATABASE_URL` é criada.
-2. Aplique as migrações no banco (uma vez e a cada mudança de schema):
-
-   ```bash
-   DATABASE_URL="postgres://..." pnpm db:migrate
-   ```
-
-3. Faça o deploy. O app não cria tabelas sozinho: rode `db:migrate` antes de publicar mudanças de schema.
+2. Nada mais a fazer: o deploy roda `pnpm db:migrate` antes da build (script `vercel-build`), então as tabelas são criadas e atualizadas automaticamente.
+   Para rodar a migração manualmente, use `DATABASE_URL="postgres://..." pnpm db:migrate`.
 
 Para desenvolver localmente, use qualquer Postgres (por exemplo, `docker run -p 5432:5432 -e POSTGRES_PASSWORD=dev postgres:16`)
 e defina `DATABASE_URL=postgres://postgres:dev@localhost:5432/postgres` no `.env.local`.
