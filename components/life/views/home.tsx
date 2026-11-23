@@ -111,7 +111,7 @@ export function HomeView() {
         id: `rem-${r.id}`,
         text: `${cat ? cat.name + ": " : ""}${r.label} · ${relativeDay(r.date, today)}`,
         tone: r.date <= today ? "warn" : "info",
-        to: "lar",
+        to: r.area === "gatos" ? "gatos" : "lar",
       })
     }
     for (const c of data.cats) {
@@ -121,7 +121,7 @@ export function HomeView() {
           id: `food-${c.id}`,
           text: left <= 0 ? `Ração de ${c.name} acabou` : `Ração de ${c.name} acaba em ${left} dia${left === 1 ? "" : "s"}`,
           tone: left <= 3 ? "warn" : "info",
-          to: "lar",
+          to: "gatos",
         })
       }
     }
@@ -568,7 +568,7 @@ export function HomeView() {
 
         {/* Gatos & casa */}
         <Card>
-          <WidgetHead eyebrow="Lar & gatos" title={data.cats.length ? data.cats.map((c) => c.name).join(" e ") : "Sua família de pets"} to="lar" />
+          <WidgetHead eyebrow="Gatos" title={data.cats.length ? data.cats.map((c) => c.name).join(" e ") : "Sua família de pets"} to="gatos" />
           {data.cats.length === 0 ? (
             <Empty icon={Cat} title="Cadastre os gatos" text="Ração, vacinas e vermífugo com lembretes automáticos." />
           ) : (

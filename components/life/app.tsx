@@ -37,7 +37,8 @@ const VIEW_COMPONENTS: Record<ViewId, React.ComponentType> = {
   momentos: MomentsView,
   pessoas: PeopleView,
   viagens: TripsView,
-  lar: HomeCareView,
+  gatos: () => <HomeCareView mode="gatos" />,
+  lar: () => <HomeCareView mode="casa" />,
   mercado: GroceriesView,
 }
 

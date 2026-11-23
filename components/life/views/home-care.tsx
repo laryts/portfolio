@@ -60,7 +60,7 @@ function CatSheet({ open, onOpenChange, cat }: { open: boolean; onOpenChange: (o
       open={open}
       onOpenChange={onOpenChange}
       title={cat ? `Sobre ${cat.name}` : "Novo gato"}
-      description="Ração, aniversário e observações. Lembretes de saúde ficam na aba Lar."
+      description="Ração, aniversário e observações. Lembretes de saúde ficam nesta página."
       footer={
         <>
           <button type="button" className="l-btn l-btn-ghost l-focus" onClick={() => onOpenChange(false)}>Cancelar</button>
@@ -107,7 +107,7 @@ function CatSheet({ open, onOpenChange, cat }: { open: boolean; onOpenChange: (o
   )
 }
 
-function ReminderSheet({ open, onOpenChange, reminder, cats }: { open: boolean; onOpenChange: (o: boolean) => void; reminder: Reminder | null; cats: CatT[] }) {
+function ReminderSheet({ open, onOpenChange, reminder, cats, defaultArea }: { open: boolean; onOpenChange: (o: boolean) => void; reminder: Reminder | null; cats: CatT[]; defaultArea: AreaId }) {
   const { add, patch } = useLife()
   const today = todayISO()
   const [label, setLabel] = React.useState("")
@@ -119,12 +119,12 @@ function ReminderSheet({ open, onOpenChange, reminder, cats }: { open: boolean; 
   React.useEffect(() => {
     if (!open) return
     setLabel(reminder?.label ?? "")
-    setArea(reminder?.area ?? "gatos")
+    setArea(reminder?.area ?? defaultArea)
     setDate(reminder?.date ?? today)
     setRepeat(reminder?.everyDays ?? 0)
     setCatId(reminder?.catId ?? "")
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, reminder])
+  }, [open, reminder, defaultArea])
 
   const valid = label.trim().length > 0 && !!date
 
@@ -190,10 +190,10 @@ function ReminderSheet({ open, onOpenChange, reminder, cats }: { open: boolean; 
   )
 }
 
-export function HomeCareView() {
+export function HomeCareView({ mode }: { mode: "gatos" | "casa" }) {
   const { data, patch, remove } = useLife()
   const today = todayISO()
-  const [tab, setTab] = React.useState<"gatos" | "casa">("gatos")
+  const tab = mode
   const [catSheet, setCatSheet] = React.useState<{ open: boolean; cat: CatT | null }>({ open: false, cat: null })
   const [remSheet, setRemSheet] = React.useState<{ open: boolean; reminder: Reminder | null }>({ open: false, reminder: null })
 
@@ -222,8 +222,8 @@ export function HomeCareView() {
     <div>
       <PageHeader
         eyebrow="Vida & casa"
-        title="Lar & gatos"
-        description="Cuidados, ração e a rotina da casa — sem depender da memória."
+        title={mode === "gatos" ? "Gatos" : "Lar"}
+        description={mode === "gatos" ? "Ração, saúde e rotina dos seus gatos — sem depender da memória." : "A rotina da casa, com lembretes que se repetem sozinhos."}
         action={
           tab === "gatos" ? (
             <AddButton label="Novo gato" onClick={() => setCatSheet({ open: true, cat: null })} />
@@ -233,17 +233,6 @@ export function HomeCareView() {
         }
       />
 
-      <div className="mb-6">
-        <Segmented<"gatos" | "casa">
-          label="Seção"
-          value={tab}
-          onChange={setTab}
-          options={[
-            { value: "gatos", label: "Gatos" },
-            { value: "casa", label: "Casa" },
-          ]}
-        />
-      </div>
 
       {tab === "gatos" && (
         <>
@@ -350,7 +339,7 @@ export function HomeCareView() {
       </section>
 
       <CatSheet open={catSheet.open} onOpenChange={(open) => setCatSheet((s) => ({ ...s, open }))} cat={catSheet.cat} />
-      <ReminderSheet open={remSheet.open} onOpenChange={(open) => setRemSheet((s) => ({ ...s, open }))} reminder={remSheet.reminder} cats={data.cats} />
+      <ReminderSheet open={remSheet.open} onOpenChange={(open) => setRemSheet((s) => ({ ...s, open }))} reminder={remSheet.reminder} cats={data.cats} defaultArea={mode === "gatos" ? "gatos" : "casa"} />
     </div>
   )
 }
