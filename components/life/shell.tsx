@@ -47,6 +47,7 @@ export type ViewId =
   | "pessoas"
   | "viagens"
   | "lar"
+  | "gatos"
   | "mercado"
 
 interface ViewMeta {
@@ -66,7 +67,8 @@ export const VIEWS: ViewMeta[] = [
   { id: "projetos", label: "Projetos", icon: FolderKanban, group: "Crescer" },
   { id: "financas", label: "Finanças", icon: Wallet, group: "Dinheiro" },
   { id: "desejos", label: "Desejos", icon: Gift, group: "Dinheiro" },
-  { id: "lar", label: "Lar & gatos", icon: Cat, group: "Vida & casa" },
+  { id: "gatos", label: "Gatos", icon: Cat, group: "Vida & casa" },
+  { id: "lar", label: "Lar", icon: House, group: "Vida & casa" },
   { id: "mercado", label: "Mercado", icon: ShoppingBasket, group: "Vida & casa" },
   { id: "viagens", label: "Viagens", icon: Plane, group: "Vida & casa" },
   { id: "bemestar", label: "Bem-estar", icon: HeartPulse, group: "Pessoas & mente" },
