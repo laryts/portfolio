@@ -263,6 +263,24 @@ export function Segmented<T extends string | number>({
 }
 
 /** Sheet: bottom-sheet no celular, modal centralizado no desktop. Renderiza fora da árvore, então herda o tema. */
+/** Altura visível da tela (muda quando o teclado abre no iOS/Android). */
+export function useVisibleViewportHeight(): number | null {
+  const [height, setHeight] = React.useState<number | null>(null)
+  React.useEffect(() => {
+    const vv = window.visualViewport
+    if (!vv) return
+    const update = () => setHeight(vv.height)
+    update()
+    vv.addEventListener("resize", update)
+    vv.addEventListener("scroll", update)
+    return () => {
+      vv.removeEventListener("resize", update)
+      vv.removeEventListener("scroll", update)
+    }
+  }, [])
+  return height
+}
+
 export function Sheet({
   open,
   onOpenChange,
@@ -281,6 +299,7 @@ export function Sheet({
   size?: "sm" | "md" | "lg"
 }) {
   const { theme } = useLifeTheme()
+  const visibleHeight = useVisibleViewportHeight()
   const width = size === "sm" ? "md:max-w-md" : size === "lg" ? "md:max-w-2xl" : "md:max-w-xl"
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -295,7 +314,18 @@ export function Sheet({
             "md:l-sheet-desktop md:inset-auto md:left-1/2 md:top-1/2 md:max-h-[86vh] md:w-[calc(100%-48px)] md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-[24px] md:border",
             width
           )}
-          style={{ background: "var(--l-surface)", borderColor: "var(--l-border)", color: "var(--l-ink)" }}
+          style={{
+            background: "var(--l-surface)",
+            borderColor: "var(--l-border)",
+            color: "var(--l-ink)",
+            // Com o teclado aberto, a altura útil é a da área visível, não a da tela inteira.
+            maxHeight: visibleHeight ? `${Math.round(visibleHeight * 0.92)}px` : undefined,
+          }}
+          onFocusCapture={(e) => {
+            const el = e.target as HTMLElement
+            if (!["INPUT", "TEXTAREA", "SELECT"].includes(el.tagName)) return
+            window.setTimeout(() => el.scrollIntoView({ block: "center", behavior: "smooth" }), 320)
+          }}
         >
           <div className="mx-auto mt-2 h-1.5 w-11 rounded-full bg-[var(--l-border-strong)] md:hidden" aria-hidden />
           <div className="flex items-start justify-between gap-4 px-5 pb-3 pt-4 md:px-6 md:pt-6">
@@ -311,7 +341,7 @@ export function Sheet({
               </button>
             </Dialog.Close>
           </div>
-          <div className="flex-1 overflow-y-auto overflow-x-hidden px-5 pb-2 md:px-6">{children}</div>
+          <div className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain px-5 pb-2 md:px-6">{children}</div>
           {footer && (
             <div
               className="l-safe-bottom flex items-center justify-end gap-2 border-t px-5 py-4 md:px-6"

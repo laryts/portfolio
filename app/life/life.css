@@ -200,6 +200,12 @@
   border-color: var(--l-plum);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--l-plum) 18%, transparent);
 }
+/* Utilitários de padding lateral precisam vencer o padding do .l-input (CSS sem camada). */
+.l-input.pl-11 { padding-left: 2.75rem; }
+.l-input.pl-12 { padding-left: 3rem; }
+.l-input.pr-10 { padding-right: 2.5rem; }
+.l-input.pr-12 { padding-right: 3rem; }
+
 .l-label {
   display: block;
   font-size: 13px;
