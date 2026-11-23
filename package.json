@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "vercel-build": "pnpm db:migrate && next build"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "1.4.0",
